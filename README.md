@@ -1,17 +1,18 @@
-# Build The Module
+# PSXO
+
+A PowerShell wrapper for the Xen Orchestra API.
+
+This module provides PowerShell cmdlets for interacting with Xen Orchestra.
+It primarily uses the JSON-RPC API, with some cmdlets also utilizing the REST API
+where appropriate.
+
+## Build The Module
 
 > The built module will be in the `otuput` folder
 
 ```powershell
 ./build.ps1
 ```
-
-# PSXO
-
-A PowerShell wrapper for the Xen Orchestra API.
-
-This module provides PowerShell cmdlets for interacting with Xen Orchestra.
-It primarily uses the JSON-RPC API, with some cmdlets also utilizing the REST API where appropriate.
 
 ## Examples
 
