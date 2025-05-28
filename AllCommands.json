@@ -1,0 +1,2690 @@
+{
+  "acl.add": {
+    "description": "add a new ACL entry",
+    "params": {
+      "action": { "type": "string" },
+      "object": { "type": "string" },
+      "subject": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "acl.get": {
+    "description": "get existing ACLs",
+    "params": {},
+    "permission": "admin"
+  },
+  "acl.getCurrentPermissions": {
+    "description": "get (explicit) permissions by object for the current user",
+    "params": {}
+  },
+  "acl.remove": {
+    "description": "remove an existing ACL entry",
+    "params": {
+      "action": { "type": "string" },
+      "object": { "type": "string" },
+      "subject": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "api.closeAllConnections": {
+    "description": "Close all connections to this API except the current one",
+    "params": {},
+    "permission": "admin"
+  },
+  "api.getConnections": {
+    "description": "Get a list of all current connections to this API",
+    "params": {},
+    "permission": "admin"
+  },
+  "audit.checkIntegrity": {
+    "description": "Check records integrity between oldest and newest",
+    "params": {
+      "newest": { "optional": true, "type": "string" },
+      "oldest": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "audit.clean": {
+    "description": "Clean audit database",
+    "params": {},
+    "permission": "admin"
+  },
+  "audit.deleteRange": {
+    "description": "Delete a range of records and rewrite the records chain",
+    "params": {
+      "newest": { "type": "string" },
+      "oldest": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "audit.exportRecords": { "params": {}, "permission": "admin" },
+  "audit.generateFingerprint": {
+    "description": "Generate a fingerprint of the chain oldest-newest",
+    "params": {
+      "newest": { "optional": true, "type": "string" },
+      "oldest": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "audit.getRecords": {
+    "description": "Get records from a passed record ID",
+    "params": {
+      "id": { "optional": true, "type": "string" },
+      "maxRecords": { "optional": true, "type": ["number", "null"] },
+      "ndjson": { "optional": true, "type": "boolean" }
+    },
+    "permission": "admin"
+  },
+  "audit.importRecords": {
+    "description": "Import audit logs from a file",
+    "params": {},
+    "permission": "admin"
+  },
+  "backupNg.checkBackup": {
+    "params": {
+      "id": { "type": "string" },
+      "settings": { "type": "object" },
+      "sr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.createJob": {
+    "params": {
+      "compression": { "enum": ["", "native", "zstd"], "optional": true },
+      "mode": { "enum": ["full", "delta"] },
+      "name": { "optional": true, "type": "string" },
+      "proxy": { "optional": true, "type": "string" },
+      "remotes": { "optional": true, "type": "object" },
+      "schedules": { "optional": true, "type": "object" },
+      "settings": {
+        "optional": true,
+        "properties": {
+          "*": {
+            "additionalProperties": true,
+            "properties": {
+              "cbtDestroySnapshotData": { "optional": true, "type": "boolean" },
+              "concurrency": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "longTermRetention": { "optional": true, "type": "object" },
+              "maxExportRate": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "nRetriesVmBackupFailures": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "nbdConcurrency": {
+                "minimum": 1,
+                "optional": true,
+                "type": "number"
+              },
+              "preferNbd": { "optional": true, "type": "boolean" },
+              "timezone": { "optional": true, "type": "string" }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "srs": { "optional": true, "type": "object" },
+      "vms": { "type": "object" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.deleteJob": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "backupNg.deleteVmBackup": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "backupNg.deleteVmBackups": {
+    "params": { "ids": { "items": { "type": "string" }, "type": "array" } },
+    "permission": "admin"
+  },
+  "backupNg.editJob": {
+    "params": {
+      "compression": { "enum": ["", "native", "zstd"], "optional": true },
+      "id": { "type": "string" },
+      "mode": { "enum": ["full", "delta"], "optional": true },
+      "name": { "optional": true, "type": "string" },
+      "proxy": { "optional": true, "type": ["string", "null"] },
+      "remotes": { "optional": true, "type": "object" },
+      "settings": {
+        "optional": true,
+        "properties": {
+          "*": {
+            "additionalProperties": true,
+            "properties": {
+              "cbtDestroySnapshotData": { "optional": true, "type": "boolean" },
+              "concurrency": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "longTermRetention": { "optional": true, "type": "object" },
+              "maxExportRate": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "nRetriesVmBackupFailures": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "nbdConcurrency": {
+                "minimum": 1,
+                "optional": true,
+                "type": "number"
+              },
+              "preferNbd": { "optional": true, "type": "boolean" },
+              "timezone": { "optional": true, "type": "string" }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "srs": { "optional": true, "type": "object" },
+      "vms": { "optional": true, "type": "object" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.fetchFiles": {
+    "params": {
+      "disk": { "type": "string" },
+      "format": { "default": "tgz", "type": "string" },
+      "partition": { "optional": true, "type": "string" },
+      "paths": {
+        "items": { "type": "string" },
+        "minItems": 1,
+        "type": "array"
+      },
+      "remote": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.getAllJobs": { "params": {}, "permission": "admin" },
+  "backupNg.getAllLogs": {
+    "params": { "ndjson": { "optional": true, "type": "boolean" } },
+    "permission": "admin"
+  },
+  "backupNg.getJob": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "backupNg.getLogs": {
+    "params": {
+      "*": {},
+      "after": { "optional": true, "type": ["number", "string"] },
+      "before": { "optional": true, "type": ["number", "string"] },
+      "limit": { "optional": true, "type": "number" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.getSuggestedExcludedTags": { "params": {} },
+  "backupNg.importVmBackup": {
+    "params": {
+      "id": { "type": "string" },
+      "settings": { "type": "object" },
+      "sr": { "type": "string" },
+      "useDifferentialRestore": { "optional": true, "type": "boolean" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.listFiles": {
+    "params": {
+      "disk": { "type": "string" },
+      "partition": { "optional": true, "type": "string" },
+      "path": { "type": "string" },
+      "remote": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.listMountedPartitions": { "params": {}, "permission": "admin" },
+  "backupNg.listPartitions": {
+    "params": { "disk": { "type": "string" }, "remote": { "type": "string" } },
+    "permission": "admin"
+  },
+  "backupNg.listVmBackups": {
+    "params": {
+      "_forceRefresh": { "optional": true, "type": "boolean" },
+      "remotes": { "items": { "type": "string" }, "type": "array" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.mountPartition": {
+    "params": {
+      "disk": { "type": "string" },
+      "partition": { "optional": true, "type": "string" },
+      "remote": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "backupNg.runJob": {
+    "params": {
+      "id": { "type": "string" },
+      "schedule": { "type": "string" },
+      "settings": {
+        "optional": true,
+        "properties": {
+          "*": {
+            "additionalProperties": true,
+            "properties": {
+              "cbtDestroySnapshotData": { "optional": true, "type": "boolean" },
+              "concurrency": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "longTermRetention": { "optional": true, "type": "object" },
+              "maxExportRate": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "nRetriesVmBackupFailures": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "nbdConcurrency": {
+                "minimum": 1,
+                "optional": true,
+                "type": "number"
+              },
+              "preferNbd": { "optional": true, "type": "boolean" },
+              "timezone": { "optional": true, "type": "string" }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "vm": { "optional": true, "type": "string" },
+      "vms": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    },
+    "permission": "admin"
+  },
+  "backupNg.unmountPartition": {
+    "params": {
+      "disk": { "type": "string" },
+      "partition": { "optional": true, "type": "string" },
+      "remote": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "cloudConfig.create": {
+    "description": "Creates a new cloud config template",
+    "params": {
+      "name": { "type": "string" },
+      "template": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "cloudConfig.createNetworkConfig": {
+    "description": "Creates a new network config template",
+    "params": {
+      "name": { "type": "string" },
+      "template": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "cloudConfig.delete": {
+    "description": "Deletes an existing cloud config template",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "cloudConfig.getAll": {
+    "description": "Gets all existing cloud configs templates",
+    "params": {}
+  },
+  "cloudConfig.getAllNetworkConfigs": {
+    "description": "Gets all existing network config templates",
+    "params": {}
+  },
+  "cloudConfig.update": {
+    "description": "Modifies an existing cloud config template",
+    "params": {
+      "id": { "type": "string" },
+      "name": { "optional": true, "type": "string" },
+      "template": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "customField.add": {
+    "description": "Add a new custom field to an object",
+    "params": {
+      "id": { "type": "string" },
+      "name": { "type": "string" },
+      "value": { "type": "string" }
+    }
+  },
+  "customField.remove": {
+    "description": "Remove an existing custom field from an object",
+    "params": { "id": { "type": "string" }, "name": { "type": "string" } }
+  },
+  "customField.set": {
+    "description": "Set a custom field",
+    "params": {
+      "id": { "type": "string" },
+      "name": { "type": "string" },
+      "value": { "type": "string" }
+    }
+  },
+  "disk.create": {
+    "description": "create a new disk on a SR",
+    "params": {
+      "bootable": { "optional": true, "type": "boolean" },
+      "mode": { "optional": true, "type": "string" },
+      "name": { "type": "string" },
+      "position": { "optional": true, "type": "string" },
+      "size": { "type": ["integer", "string"] },
+      "sr": { "type": "string" },
+      "vm": { "optional": true, "type": "string" }
+    }
+  },
+  "disk.exportContent": {
+    "description": "export the content of a VDI",
+    "params": {
+      "format": { "enum": ["vmdk", "vhd"], "optional": true },
+      "id": { "type": "string" },
+      "nbdConcurrency": { "optional": true, "type": "number" },
+      "preferNbd": { "optional": true, "type": "boolean" }
+    }
+  },
+  "disk.import": {
+    "params": {
+      "description": { "minLength": 0, "optional": true, "type": "string" },
+      "name": { "type": "string" },
+      "sr": { "type": "string" },
+      "type": { "type": "string" },
+      "url": { "optional": true, "type": "string" },
+      "vmdkData": {
+        "optional": true,
+        "properties": { "capacity": { "type": "integer" } },
+        "type": "object"
+      }
+    }
+  },
+  "disk.importContent": {
+    "description": "import contents into a VDI",
+    "params": { "id": { "type": "string" } }
+  },
+  "docker.deregister": {
+    "description": "Deregister the VM for Docker management",
+    "params": { "vm": { "type": "string" } }
+  },
+  "docker.pause": {
+    "params": { "container": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "docker.register": {
+    "description": "Register the VM for Docker management",
+    "params": { "vm": { "type": "string" } }
+  },
+  "docker.restart": {
+    "params": { "container": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "docker.start": {
+    "params": { "container": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "docker.stop": {
+    "params": { "container": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "docker.unpause": {
+    "params": { "container": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "esxi.listVms": {
+    "params": {
+      "host": { "type": "string" },
+      "password": { "type": "string" },
+      "sslVerify": { "optional": true, "type": "boolean" },
+      "user": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "group.addUser": {
+    "description": "adds a user to a group",
+    "params": { "id": { "type": "string" }, "userId": { "type": "string" } },
+    "permission": "admin"
+  },
+  "group.create": {
+    "description": "creates a new group",
+    "params": { "name": { "type": "string" } },
+    "permission": "admin"
+  },
+  "group.delete": {
+    "description": "deletes an existing group",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "group.getAll": {
+    "description": "returns all the existing group",
+    "params": {},
+    "permission": "admin"
+  },
+  "group.removeUser": {
+    "description": "removes a user from a group",
+    "params": { "id": { "type": "string" }, "userId": { "type": "string" } },
+    "permission": "admin"
+  },
+  "group.set": {
+    "description": "changes the properties of an existing group",
+    "params": {
+      "id": { "type": "string" },
+      "name": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "group.setUsers": {
+    "description": "sets the users belonging to a group",
+    "params": { "id": { "type": "string" }, "userIds": {} },
+    "permission": "admin"
+  },
+  "host.detach": {
+    "description": "eject the host of a pool",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.disable": {
+    "description": "disable to create VM on the hsot",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.emergencyShutdownHost": {
+    "description": "suspend all VMs and shutdown host",
+    "params": { "host": { "type": "string" } }
+  },
+  "host.enable": {
+    "description": "enable to create VM on the host",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.forget": {
+    "description": "remove the host record from XAPI database",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.getBiosInfo": { "params": { "id": { "type": "string" } } },
+  "host.getBlockdevices": { "params": { "id": { "type": "string" } } },
+  "host.getIpmiSensors": { "params": { "id": { "type": "string" } } },
+  "host.getMdadmHealth": {
+    "description": "retrieve the mdadm RAID health information",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.getSchedulerGranularity": {
+    "description": "get the scheduler granularity of a host",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.getSmartctlHealth": {
+    "description": "get smartctl health status",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.getSmartctlInformation": {
+    "description": "get smartctl information",
+    "params": {
+      "deviceNames": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "id": { "type": "string" }
+    }
+  },
+  "host.installCertificate": {
+    "description": "Install a certificate on a host",
+    "params": {
+      "certificate": { "type": "string" },
+      "chain": { "optional": true, "type": "string" },
+      "id": { "type": "string" },
+      "privateKey": { "type": "string" }
+    }
+  },
+  "host.installSupplementalPack": {
+    "description": "installs supplemental pack from ISO file",
+    "params": { "host": { "type": "string" } }
+  },
+  "host.isHostServerTimeConsistent": {
+    "params": { "host": { "type": "string" } }
+  },
+  "host.isHyperThreadingEnabled": {
+    "description": "get hyper-threading information",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.isPubKeyTooShort": {
+    "description": "check if host public TLS key is long enough",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.restart": {
+    "description": "restart the host",
+    "params": {
+      "bypassBackupCheck": { "optional": true, "type": "boolean" },
+      "bypassBlockedSuspend": { "optional": true, "type": "boolean" },
+      "bypassCurrentVmCheck": { "optional": true, "type": "boolean" },
+      "bypassVersionCheck": { "optional": true, "type": "boolean" },
+      "force": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "suspendResidentVms": { "default": false, "type": "boolean" }
+    }
+  },
+  "host.restartAgent": {
+    "description": "restart the Xen agent on the host",
+    "params": {
+      "bypassBackupCheck": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "host.restart_agent": {
+    "description": "restart the Xen agent on the host",
+    "params": {
+      "bypassBackupCheck": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "host.scanPifs": {
+    "description": "Refresh the list of physical interfaces for this host",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.set": {
+    "description": "changes the properties of an host",
+    "params": {
+      "id": { "type": "string" },
+      "iscsiIqn": { "optional": true, "type": "string" },
+      "multipathing": { "optional": true, "type": "boolean" },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" }
+    }
+  },
+  "host.setControlDomainMemory": {
+    "description": "Set host's control domain memory and restart the host",
+    "params": { "id": { "type": "string" }, "memory": { "type": "number" } }
+  },
+  "host.setMaintenanceMode": {
+    "description": "manage the maintenance mode",
+    "params": {
+      "id": { "type": "string" },
+      "maintenance": { "type": "boolean" },
+      "vmsToForceMigrate": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    }
+  },
+  "host.setRemoteSyslogHost": {
+    "params": {
+      "id": { "type": "string" },
+      "syslogDestination": { "type": "string" }
+    }
+  },
+  "host.setSchedulerGranularity": {
+    "description": "set scheduler granularity of a host",
+    "params": {
+      "id": { "type": "string" },
+      "schedulerGranularity": { "enum": ["cpu", "core", "socket"] }
+    }
+  },
+  "host.start": {
+    "description": "start the host",
+    "params": { "id": { "type": "string" } }
+  },
+  "host.stats": {
+    "description": "returns statistic of the host",
+    "params": {
+      "granularity": { "optional": true, "type": "string" },
+      "host": { "type": "string" }
+    }
+  },
+  "host.stop": {
+    "description": "stop the host",
+    "params": {
+      "bypassBackupCheck": { "optional": true, "type": "boolean" },
+      "bypassEvacuate": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+
+  "ipPool.create": {
+    "description": "Creates a new ipPool",
+    "params": {},
+    "permission": "admin"
+  },
+  "ipPool.delete": {
+    "description": "Delete an ipPool",
+    "params": {},
+    "permission": "admin"
+  },
+  "ipPool.getAll": {
+    "description": "List all ipPools",
+    "params": { "userId": { "optional": true, "type": "string" } }
+  },
+  "ipPool.set": {
+    "description": "Allow to modify an existing ipPool",
+    "params": {},
+    "permission": "admin"
+  },
+  "job.cancel": {
+    "description": "Cancel a current run",
+    "params": {},
+    "permission": "admin"
+  },
+  "job.create": {
+    "description": "Creates a new job from description object",
+    "params": {
+      "job": {
+        "properties": {
+          "key": { "type": "string" },
+          "method": { "type": "string" },
+          "name": { "optional": true, "type": "string" },
+          "paramsVector": {
+            "optional": true,
+            "properties": {
+              "items": { "items": { "type": "object" }, "type": "array" },
+              "type": { "type": "string" }
+            },
+            "type": "object"
+          },
+          "timeout": { "optional": true, "type": "number" },
+          "type": { "type": "string" },
+          "userId": { "optional": true, "type": "string" }
+        },
+        "type": "object"
+      }
+    },
+    "permission": "admin"
+  },
+  "job.delete": {
+    "description": "Deletes an existing job",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "job.get": {
+    "description": "Gets an existing job",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "job.getAll": {
+    "description": "Gets all available jobs",
+    "params": {},
+    "permission": "admin"
+  },
+  "job.runSequence": {
+    "description": "Runs jobs sequentially, in the provided order",
+    "params": {
+      "idSequence": { "items": { "type": "string" }, "type": "array" }
+    },
+    "permission": "admin"
+  },
+  "job.set": {
+    "description": "Modifies an existing job from a description object",
+    "params": {
+      "job": {
+        "properties": {
+          "id": { "type": "string" },
+          "key": { "optional": true, "type": "string" },
+          "method": { "optional": true, "type": "string" },
+          "name": { "optional": true, "type": "string" },
+          "paramsVector": {
+            "optional": true,
+            "properties": {
+              "items": { "items": { "type": "object" }, "type": "array" },
+              "type": { "type": "string" }
+            },
+            "type": "object"
+          },
+          "timeout": { "optional": true, "type": ["number", "null"] },
+          "type": { "optional": true, "type": "string" },
+          "userId": { "optional": true, "type": "string" }
+        },
+        "type": "object"
+      }
+    },
+    "permission": "admin"
+  },
+  "log.delete": {
+    "description": "deletes one or several logs from a namespace",
+    "params": {
+      "id": { "type": ["array", "string"] },
+      "namespace": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "log.get": {
+    "description": "returns logs list for one namespace",
+    "params": { "namespace": { "type": "string" } },
+    "permission": "admin"
+  },
+  "message.delete": { "params": { "id": { "type": "string" } } },
+  "metadataBackup.createJob": {
+    "params": {
+      "name": { "optional": true, "type": "string" },
+      "pools": { "optional": true, "type": "object" },
+      "proxy": { "optional": true, "type": "string" },
+      "remotes": { "type": "object" },
+      "schedules": { "type": "object" },
+      "settings": { "type": "object" },
+      "xoMetadata": { "optional": true, "type": "boolean" }
+    },
+    "permission": "admin"
+  },
+  "metadataBackup.delete": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "metadataBackup.deleteJob": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "metadataBackup.editJob": {
+    "params": {
+      "id": { "type": "string" },
+      "name": { "optional": true, "type": "string" },
+      "pools": { "optional": true, "type": ["object", "null"] },
+      "proxy": { "optional": true, "type": ["string", "null"] },
+      "remotes": { "optional": true, "type": "object" },
+      "settings": { "optional": true, "type": "object" },
+      "xoMetadata": { "optional": true, "type": "boolean" }
+    },
+    "permission": "admin"
+  },
+  "metadataBackup.getAllJobs": { "params": {}, "permission": "admin" },
+  "metadataBackup.getJob": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "metadataBackup.list": {
+    "params": { "remotes": { "items": { "type": "string" }, "type": "array" } },
+    "permission": "admin"
+  },
+  "metadataBackup.restore": {
+    "params": {
+      "id": { "type": "string" },
+      "pool": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "metadataBackup.runJob": {
+    "params": { "id": { "type": "string" }, "schedule": { "type": "string" } },
+    "permission": "admin"
+  },
+  "mirrorBackup.createJob": {
+    "params": {
+      "filter": {
+        "nullable": true,
+        "optional": true,
+        "properties": {
+          "vm": {
+            "properties": {
+              "uuid": {
+                "properties": {
+                  "__or": {
+                    "items": { "type": "string" },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "mode": { "enum": ["full", "delta"] },
+      "name": { "optional": true, "type": "string" },
+      "proxy": { "optional": true, "type": "string" },
+      "remotes": { "type": "object" },
+      "schedules": { "optional": true, "type": "object" },
+      "settings": {
+        "optional": true,
+        "properties": {
+          "*": {
+            "additionalProperties": true,
+            "properties": {
+              "concurrency": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "maxExportRate": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "sourceRemote": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "mirrorBackup.deleteJob": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "mirrorBackup.editJob": {
+    "params": {
+      "filter": {
+        "nullable": true,
+        "optional": true,
+        "properties": {
+          "vm": {
+            "properties": {
+              "uuid": {
+                "properties": {
+                  "__or": {
+                    "items": { "type": "string" },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "id": { "type": "string" },
+      "mode": { "enum": ["full", "delta"] },
+      "name": { "optional": true, "type": "string" },
+      "proxy": { "optional": true, "type": "string" },
+      "remotes": { "type": "object" },
+      "settings": {
+        "optional": true,
+        "properties": {
+          "*": {
+            "additionalProperties": true,
+            "properties": {
+              "concurrency": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "maxExportRate": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "sourceRemote": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "mirrorBackup.getAllJobs": { "params": {}, "permission": "admin" },
+  "mirrorBackup.getJob": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "mirrorBackup.runJob": {
+    "params": {
+      "id": { "type": "string" },
+      "schedule": { "type": "string" },
+      "settings": {
+        "optional": true,
+        "properties": {
+          "*": {
+            "additionalProperties": true,
+            "properties": {
+              "concurrency": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              },
+              "maxExportRate": {
+                "minimum": 0,
+                "optional": true,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "vm": { "optional": true, "type": "string" },
+      "vms": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    },
+    "permission": "admin"
+  },
+  "network.create": {
+    "params": {
+      "description": { "minLength": 0, "optional": true, "type": "string" },
+      "mtu": { "minimum": 68, "optional": true, "type": "integer" },
+      "name": { "type": "string" },
+      "nbd": { "optional": true, "type": "boolean" },
+      "pif": { "optional": true, "type": "string" },
+      "pool": { "type": "string" },
+      "vlan": { "optional": true, "type": "integer" }
+    }
+  },
+  "network.createBonded": {
+    "description": "Create a bonded network. bondMode can be balance-slb, active-backup or lacp",
+    "params": {
+      "bondMode": { "enum": ["balance-slb", "active-backup", "lacp"] },
+      "description": { "minLength": 0, "optional": true, "type": "string" },
+      "mtu": { "minimum": 68, "optional": true, "type": "integer" },
+      "name": { "type": "string" },
+      "pifs": { "items": { "type": "string" }, "type": "array" },
+      "pool": { "type": "string" }
+    }
+  },
+  "network.delete": { "params": { "id": { "type": "string" } } },
+  "network.getBondModes": { "params": {} },
+  "network.set": {
+    "params": {
+      "automatic": { "optional": true, "type": "boolean" },
+      "defaultIsLocked": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "mtu": { "minimum": 68, "optional": true, "type": "integer" },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" },
+      "nbd": { "optional": true, "type": "boolean" }
+    }
+  },
+  "pbd.connect": { "params": { "id": { "type": "string" } } },
+  "pbd.delete": { "params": { "id": { "type": "string" } } },
+  "pbd.disconnect": { "params": { "id": { "type": "string" } } },
+  "pci.disableDom0Access": {
+    "params": {
+      "disable": { "type": "boolean" },
+      "forceReboot": { "optional": true, "type": "boolean" },
+      "pcis": { "items": { "type": "string" }, "type": "array" }
+    }
+  },
+  "pci.getDom0AccessStatus": { "params": { "id": { "type": "string" } } },
+  "pif.connect": { "params": { "id": { "type": "string" } } },
+  "pif.delete": { "params": { "id": { "type": "string" } } },
+  "pif.disconnect": { "params": { "id": { "type": "string" } } },
+  "pif.editPif": {
+    "params": {
+      "id": { "type": "string" },
+      "vlan": { "type": ["integer", "string"] }
+    }
+  },
+  "pif.getIpv4ConfigurationModes": { "params": {} },
+  "pif.getIpv6ConfigurationModes": { "params": {} },
+  "pif.reconfigureIp": {
+    "params": {
+      "dns": { "minLength": 0, "optional": true, "type": "string" },
+      "gateway": { "minLength": 0, "optional": true, "type": "string" },
+      "id": { "optional": true, "type": "string" },
+      "ip": { "minLength": 0, "optional": true, "type": "string" },
+      "ipv6": { "default": "", "minLength": 0, "type": "string" },
+      "ipv6Mode": {
+        "enum": ["None", "DHCP", "Static", "Autoconf"],
+        "optional": true
+      },
+      "mode": { "optional": true, "type": "string" },
+      "netmask": { "minLength": 0, "optional": true, "type": "string" }
+    }
+  },
+  "plugin.configure": {
+    "description": "sets the configuration of a plugin",
+    "params": { "configuration": {}, "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.disableAutoload": {
+    "description": "",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.enableAutoload": {
+    "description": "enables a plugin, allowing it to be loaded",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.get": {
+    "description": "returns a list of all installed plugins",
+    "params": {},
+    "permission": "admin"
+  },
+  "plugin.load": {
+    "description": "loads a plugin",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.purgeConfiguration": {
+    "description": "removes a plugin configuration",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.test": {
+    "description": "Test a plugin with its current configuration",
+    "params": { "data": { "optional": true }, "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.unload": {
+    "description": "unloads a plugin",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "plugin.usageReport.send": { "params": {} },
+  "pool.disableHa": { "params": { "pool": { "type": "string" } } },
+  "pool.enableHa": {
+    "params": {
+      "configuration": { "type": "object" },
+      "heartbeatSrs": { "items": { "type": "string" }, "type": "array" },
+      "pool": { "type": "string" }
+    }
+  },
+  "pool.getGuestSecureBootReadiness": {
+    "params": {
+      "forceRefresh": { "default": false, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "pool.getLicenseState": { "params": { "pool": { "type": "string" } } },
+  "pool.getPatchesDifference": {
+    "params": { "source": { "type": "string" }, "target": { "type": "string" } }
+  },
+  "pool.installPatches": {
+    "description": "Install patches on hosts",
+    "params": {
+      "hosts": { "optional": true, "type": "array" },
+      "patches": { "optional": true, "type": "array" },
+      "pool": { "optional": true, "type": "string" },
+      "xsHash": { "optional": true, "type": "string" }
+    }
+  },
+  "pool.installSupplementalPack": {
+    "description": "installs supplemental pack from ISO file on all hosts",
+    "params": { "pool": { "type": "string" } }
+  },
+  "pool.listMissingPatches": {
+    "description": "return an array of missing new patches in the host",
+    "params": { "host": { "type": "string" } }
+  },
+  "pool.listPoolsMatchingCriteria": {
+    "params": {
+      "minAvailableHostMemory": { "optional": true, "type": "number" },
+      "minAvailableSrSize": { "optional": true, "type": "number" },
+      "minHostCpus": { "optional": true, "type": "number" },
+      "minHostVersion": { "optional": true, "type": "string" },
+      "poolNameRegExp": { "optional": true, "type": "string" },
+      "srNameRegExp": { "optional": true, "type": "string" }
+    }
+  },
+  "pool.mergeInto": {
+    "params": {
+      "force": { "optional": true, "type": "boolean" },
+      "source": { "optional": true, "type": "string" },
+      "sources": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "target": { "type": "string" }
+    }
+  },
+  "pool.rollingReboot": {
+    "params": {
+      "bypassBackupCheck": { "default": false, "type": "boolean" },
+      "pool": { "type": "string" }
+    }
+  },
+  "pool.rollingUpdate": {
+    "params": {
+      "bypassBackupCheck": { "optional": true, "type": "boolean" },
+      "pool": { "type": "string" },
+      "rebootVm": { "optional": true, "type": "boolean" }
+    }
+  },
+  "pool.set": {
+    "params": {
+      "auto_poweron": { "optional": true, "type": "boolean" },
+      "backupNetwork": { "optional": true, "type": ["string", "null"] },
+      "crashDumpSr": { "optional": true, "type": ["string", "null"] },
+      "id": { "type": "string" },
+      "migrationCompression": { "optional": true, "type": "boolean" },
+      "migrationNetwork": { "optional": true, "type": ["string", "null"] },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" },
+      "suspendSr": { "optional": true, "type": ["string", "null"] }
+    }
+  },
+  "pool.setDefaultSr": { "params": { "sr": { "type": "string" } } },
+  "pool.setPoolMaster": { "params": { "host": { "type": "string" } } },
+  "proxy.checkHealth": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "proxy.deploy": {
+    "params": {
+      "httpProxy": { "optional": true, "type": "string" },
+      "license": { "type": "string" },
+      "network": { "optional": true, "type": "string" },
+      "networkConfiguration": {
+        "optional": true,
+        "properties": {
+          "dns": { "type": "string" },
+          "gateway": { "type": "string" },
+          "ip": { "type": "string" },
+          "netmask": { "type": "string" }
+        },
+        "type": "object"
+      },
+      "proxy": { "optional": true, "type": "string" },
+      "sr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "proxy.destroy": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "proxy.get": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "proxy.getAll": { "params": {}, "permission": "admin" },
+  "proxy.getApplianceUpdaterState": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "proxy.openSupportTunnel": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "proxy.register": {
+    "params": {
+      "address": { "optional": true, "type": "string" },
+      "authenticationToken": { "optional": true, "type": "string" },
+      "name": { "optional": true, "type": "string" },
+      "vm": { "optional": true, "type": "string" },
+      "vmUuid": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "proxy.unregister": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "proxy.update": {
+    "params": {
+      "address": { "optional": true, "type": ["string", "null"] },
+      "authenticationToken": { "optional": true, "type": "string" },
+      "id": { "type": "string" },
+      "name": { "optional": true, "type": "string" },
+      "vm": { "optional": true, "type": ["string", "null"] }
+    },
+    "permission": "admin"
+  },
+  "proxy.updateApplianceSettings": {
+    "params": {
+      "httpProxy": { "optional": true, "type": ["string", "null"] },
+      "id": { "type": "string" },
+      "register": { "optional": true, "type": "boolean" },
+      "xoaPassword": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "proxy.upgradeAppliance": {
+    "params": {
+      "force": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "ignoreRunningJobs": { "optional": true, "type": "boolean" }
+    },
+    "permission": "admin"
+  },
+  "pusb.scan": { "params": { "host": { "type": "string" } } },
+  "pusb.set": {
+    "params": {
+      "enabled": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "remote.create": {
+    "description": "Creates a new fs remote point",
+    "params": {
+      "name": { "type": "string" },
+      "options": { "optional": true, "type": "string" },
+      "proxy": { "optional": true, "type": "string" },
+      "url": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "remote.delete": {
+    "description": "Deletes an existing fs remote point",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "remote.get": {
+    "description": "Gets an existing fs remote point",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "remote.getAll": {
+    "description": "Gets all existing fs remote points",
+    "params": {},
+    "permission": "admin"
+  },
+  "remote.getAllInfo": {
+    "description": "Gets all info of remote",
+    "params": {},
+    "permission": "admin"
+  },
+  "remote.set": {
+    "description": "Modifies an existing fs remote point",
+    "params": {
+      "enabled": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "name": { "optional": true, "type": "string" },
+      "options": { "optional": true, "type": ["string", "null"] },
+      "proxy": { "optional": true, "type": ["string", "null"] },
+      "url": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "remote.test": {
+    "description": "Performs a read/write matching test on a remote point",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.addLimit": {
+    "params": {
+      "id": { "type": "string" },
+      "limitId": { "type": "string" },
+      "quantity": { "type": "integer" }
+    },
+    "permission": "admin"
+  },
+  "resourceSet.addObject": {
+    "params": { "id": { "type": "string" }, "object": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.addSubject": {
+    "params": { "id": { "type": "string" }, "subject": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.create": {
+    "params": {
+      "limits": { "optional": true, "type": "object" },
+      "name": { "type": "string" },
+      "objects": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "shareByDefault": { "optional": true, "type": "boolean" },
+      "subjects": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "tags": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    },
+    "permission": "admin"
+  },
+  "resourceSet.delete": {
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.get": { "params": { "id": { "type": "string" } } },
+  "resourceSet.getAll": {
+    "description": "Get the list of all existing resource set",
+    "params": {}
+  },
+  "resourceSet.recomputeAllLimits": {
+    "description": "Recompute manually the current resource set usage",
+    "params": {},
+    "permission": "admin"
+  },
+  "resourceSet.removeLimit": {
+    "params": { "id": { "type": "string" }, "limitId": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.removeObject": {
+    "params": { "id": { "type": "string" }, "object": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.removeSubject": {
+    "params": { "id": { "type": "string" }, "subject": { "type": "string" } },
+    "permission": "admin"
+  },
+  "resourceSet.set": {
+    "params": {
+      "id": { "type": "string" },
+      "ipPools": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "limits": { "optional": true, "type": "object" },
+      "name": { "optional": true, "type": "string" },
+      "objects": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "shareByDefault": { "optional": true, "type": "boolean" },
+      "subjects": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "tags": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    },
+    "permission": "admin"
+  },
+  "role.getAll": {
+    "description": "Returns the list of all existing roles",
+    "params": {}
+  },
+  "schedule.create": {
+    "description": "Creates a new schedule",
+    "params": {
+      "cron": { "type": "string" },
+      "enabled": { "optional": true, "type": "boolean" },
+      "jobId": { "type": "string" },
+      "name": { "minLength": 0, "optional": true, "type": "string" },
+      "timezone": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "schedule.delete": {
+    "description": "Deletes an existing schedule",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "schedule.get": {
+    "description": "Gets an existing schedule",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "schedule.getAll": {
+    "description": "Gets all existing schedules",
+    "params": {},
+    "permission": "admin"
+  },
+  "schedule.runSequence": {
+    "description": "Run a sequence of schedules, one after the other",
+    "params": {
+      "schedules": { "items": { "type": "string" }, "type": "array" }
+    },
+    "permission": "admin"
+  },
+  "schedule.set": {
+    "description": "Modifies an existing schedule",
+    "params": {
+      "cron": { "optional": true, "type": "string" },
+      "enabled": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "jobId": { "optional": true, "type": "string" },
+      "name": { "minLength": 0, "optional": true, "type": ["string", "null"] },
+      "timezone": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "server.add": {
+    "description": "register a new Xen server",
+    "params": {
+      "allowUnauthorized": { "optional": true, "type": "boolean" },
+      "autoConnect": { "optional": true, "type": "boolean" },
+      "host": { "type": "string" },
+      "httpProxy": { "optional": true, "type": "string" },
+      "label": { "optional": true, "type": "string" },
+      "password": { "type": "string" },
+      "username": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "server.disable": {
+    "description": "disable a Xen server",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "server.enable": {
+    "description": "enable a Xen server",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "server.getAll": {
+    "description": "returns all the registered Xen server",
+    "params": {},
+    "permission": "admin"
+  },
+  "server.remove": {
+    "description": "unregister a Xen server",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "server.set": {
+    "description": "changes the properties of a Xen server",
+    "params": {
+      "allowUnauthorized": { "optional": true, "type": "boolean" },
+      "host": { "optional": true, "type": "string" },
+      "httpProxy": { "optional": true, "type": ["string", "null"] },
+      "id": { "type": "string" },
+      "label": { "optional": true, "type": ["null", "string"] },
+      "password": { "optional": true, "type": "string" },
+      "readOnly": { "optional": true, "type": "boolean" },
+      "username": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "session.getUser": {
+    "description": "return the currently connected user",
+    "params": {},
+    "permission": null
+  },
+  "session.signIn": {
+    "description": "sign in",
+    "params": {},
+    "permission": null
+  },
+  "session.signInWithPassword": {
+    "description": "sign in",
+    "params": {
+      "email": { "type": "string" },
+      "password": { "type": "string" }
+    },
+    "permission": null
+  },
+  "session.signInWithToken": {
+    "description": "sign in",
+    "params": { "token": { "type": "string" } },
+    "permission": null
+  },
+  "session.signOut": {
+    "description": "sign out the user from the current session",
+    "params": {}
+  },
+  "sr.connectAllPbds": { "params": { "id": { "type": "string" } } },
+  "sr.createExt": {
+    "params": {
+      "device": { "type": "string" },
+      "host": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" }
+    }
+  },
+  "sr.createHba": {
+    "params": {
+      "host": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" },
+      "scsiId": { "type": "string" },
+      "srUuid": { "optional": true, "type": "string" }
+    }
+  },
+  "sr.createIscsi": {
+    "params": {
+      "chapPassword": { "optional": true, "type": "string" },
+      "chapUser": { "optional": true, "type": "string" },
+      "host": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" },
+      "port": { "optional": true, "type": "integer" },
+      "scsiId": { "type": "string" },
+      "srUuid": { "optional": true, "type": "string" },
+      "target": { "type": "string" },
+      "targetIqn": { "type": "string" }
+    }
+  },
+  "sr.createIso": {
+    "params": {
+      "host": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" },
+      "nfsOptions": { "optional": true, "type": "string" },
+      "nfsVersion": { "optional": true, "type": "string" },
+      "password": { "optional": true, "type": "string" },
+      "path": { "type": "string" },
+      "srUuid": { "optional": true, "type": "string" },
+      "type": { "type": "string" },
+      "user": { "optional": true, "type": "string" }
+    }
+  },
+  "sr.createLvm": {
+    "params": {
+      "device": { "type": "string" },
+      "host": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" }
+    }
+  },
+  "sr.createNfs": {
+    "params": {
+      "host": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" },
+      "nfsOptions": { "optional": true, "type": "string" },
+      "nfsVersion": { "optional": true, "type": "string" },
+      "server": { "type": "string" },
+      "serverPath": { "type": "string" },
+      "srUuid": { "optional": true, "type": "string" }
+    }
+  },
+  "sr.createSmb": {
+    "params": {
+      "host": { "type": "string" },
+      "nameDescription": { "default": "", "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" },
+      "password": { "optional": true, "type": "string" },
+      "server": { "type": "string" },
+      "srUuid": { "optional": true, "type": "string" },
+      "user": { "optional": true, "type": "string" }
+    }
+  },
+  "sr.createZfs": {
+    "params": {
+      "host": { "type": "string" },
+      "location": { "type": "string" },
+      "nameDescription": { "minLength": 0, "type": "string" },
+      "nameLabel": { "type": "string" }
+    }
+  },
+  "sr.destroy": { "params": { "id": { "type": "string" } } },
+  "sr.disableMaintenanceMode": {
+    "description": "disable the maintenance of the SR",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "sr.disconnectAllPbds": { "params": { "id": { "type": "string" } } },
+  "sr.enableMaintenanceMode": {
+    "description": "switch the SR into maintenance mode",
+    "params": {
+      "id": { "type": "string" },
+      "vmsToShutdown": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    },
+    "permission": "admin"
+  },
+  "sr.forget": { "params": { "id": { "type": "string" } } },
+  "sr.getAllUnhealthyVdiChainsLength": { "params": {}, "permission": "admin" },
+  "sr.getVdiChainsInfo": { "params": { "id": { "type": "string" } } },
+  "sr.probeHba": { "params": { "host": { "type": "string" } } },
+  "sr.probeHbaExists": {
+    "params": { "host": { "type": "string" }, "scsiId": { "type": "string" } }
+  },
+  "sr.probeIscsiExists": {
+    "params": {
+      "chapPassword": { "optional": true, "type": "string" },
+      "chapUser": { "optional": true, "type": "string" },
+      "host": { "type": "string" },
+      "port": { "optional": true, "type": "integer" },
+      "scsiId": { "type": "string" },
+      "target": { "type": "string" },
+      "targetIqn": { "type": "string" }
+    }
+  },
+  "sr.probeIscsiIqns": {
+    "params": {
+      "chapPassword": { "optional": true, "type": "string" },
+      "chapUser": { "optional": true, "type": "string" },
+      "host": { "type": "string" },
+      "port": { "optional": true, "type": "integer" },
+      "target": { "type": "string" }
+    }
+  },
+  "sr.probeIscsiLuns": {
+    "params": {
+      "chapPassword": { "optional": true, "type": "string" },
+      "chapUser": { "optional": true, "type": "string" },
+      "host": { "type": "string" },
+      "port": { "optional": true, "type": "integer" },
+      "target": { "type": "string" },
+      "targetIqn": { "type": "string" }
+    }
+  },
+  "sr.probeNfs": {
+    "params": {
+      "host": { "type": "string" },
+      "nfsVersion": { "optional": true, "type": "string" },
+      "server": { "type": "string" }
+    }
+  },
+  "sr.probeNfsExists": {
+    "params": {
+      "host": { "type": "string" },
+      "nfsVersion": { "optional": true, "type": "string" },
+      "server": { "type": "string" },
+      "serverPath": { "type": "string" }
+    }
+  },
+  "sr.probeZfs": { "params": { "host": { "type": "string" } } },
+  "sr.reclaimSpace": {
+    "description": "reclaim freed space on SR",
+    "params": { "id": { "type": "string" } }
+  },
+  "sr.scan": { "params": { "id": { "type": "string" } } },
+  "sr.set": {
+    "params": {
+      "id": { "type": "string" },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" }
+    }
+  },
+  "sr.stats": {
+    "description": "returns statistic of the sr",
+    "params": {
+      "granularity": { "optional": true, "type": "string" },
+      "id": { "type": "string" }
+    }
+  },
+  "system.getMethodsInfo": {
+    "description": "returns the signatures of all available API methods",
+    "params": {},
+    "permission": null
+  },
+  "system.getServerTimezone": {
+    "description": "return the timezone server",
+    "params": {}
+  },
+  "system.getServerVersion": {
+    "description": "return the version of xo-server",
+    "params": {},
+    "permission": null
+  },
+  "system.getVersion": {
+    "description": "API version (unstable)",
+    "params": {},
+    "permission": null
+  },
+  "system.listMethods": {
+    "description": "returns the name of all available API methods",
+    "params": {},
+    "permission": null
+  },
+  "system.methodSignature": {
+    "description": "returns the signature of an API method",
+    "params": { "method": { "type": "string" } },
+    "permission": null
+  },
+  "tag.add": {
+    "description": "add a new tag to an object",
+    "params": { "id": { "type": "string" }, "tag": { "type": "string" } }
+  },
+  "tag.getAllConfigured": {
+    "description": "Get all configured tags",
+    "params": {}
+  },
+  "tag.remove": {
+    "description": "remove an existing tag from an object",
+    "params": {
+      "id": { "type": "string" },
+      "tag": { "minLength": 0, "type": "string" }
+    }
+  },
+  "tag.set": {
+    "description": "Set a tag configuration",
+    "params": {
+      "color": {
+        "nullable": true,
+        "optional": true,
+        "pattern": "^#?([0-9A-Fa-f]{6})$",
+        "type": "string"
+      },
+      "id": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "task.cancel": { "params": { "id": { "type": "string" } } },
+  "task.destroy": { "params": { "id": { "type": "string" } } },
+  "test.changeConnectedXapiHostname": {
+    "description": "change the connected XAPI hostname and check if the pool and the local cache are updated",
+    "params": {
+      "hostname": { "type": "string" },
+      "newObject": {
+        "description": "new connection's XO object",
+        "type": "string"
+      },
+      "oldObject": {
+        "description": "current connection's XO object",
+        "type": "string"
+      }
+    },
+    "permission": "admin"
+  },
+  "test.copyVm": {
+    "description": "export/import full/delta VM",
+    "params": { "sr": { "type": "string" }, "vm": { "type": "string" } },
+    "permission": "admin"
+  },
+  "test.createTask": {
+    "params": {
+      "duration": { "default": 600000, "type": "number" },
+      "name": { "default": "xo task", "type": "string" },
+      "objectId": { "optional": true, "type": "string" },
+      "result": { "optional": true }
+    },
+    "permission": "admin"
+  },
+  "test.getPermissionsForUser": {
+    "params": { "userId": { "type": "string" } },
+    "permission": "admin"
+  },
+  "test.hasPermission": {
+    "params": {
+      "objectId": { "type": "string" },
+      "permission": { "type": "string" },
+      "userId": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "test.wait": { "params": { "duration": { "type": "string" } } },
+  "token.create": {
+    "description": "create a new authentication token",
+    "params": {
+      "client": {
+        "description": "client this authentication token belongs to, if a previous token exists, it will be updated and returned",
+        "optional": true,
+        "properties": {
+          "id": {
+            "description": "unique identifier of this client",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "description": { "optional": true, "type": "string" },
+      "expiresIn": { "optional": true, "type": ["number", "string"] }
+    }
+  },
+  "token.delete": {
+    "description": "delete matching authentication tokens for all users",
+    "params": {
+      "pattern": { "optional": true, "type": "object" },
+      "tokens": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    },
+    "permission": "admin"
+  },
+  "token.deleteOwn": {
+    "description": "delete matching authentication tokens for the current user",
+    "params": {
+      "pattern": { "optional": true, "type": "object" },
+      "tokens": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      }
+    }
+  },
+  "token.set": {
+    "description": "changes the properties of an existing token",
+    "params": {
+      "description": {
+        "minLength": 0,
+        "optional": true,
+        "type": ["null", "string"]
+      },
+      "id": { "type": "string" }
+    }
+  },
+  "user.changePassword": {
+    "description": "change password after checking old password (user function)",
+    "params": {
+      "newPassword": { "type": "string" },
+      "oldPassword": { "type": "string" }
+    }
+  },
+  "user.create": {
+    "description": "creates a new user",
+    "params": {
+      "email": { "type": "string" },
+      "password": { "type": "string" },
+      "permission": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "user.delete": {
+    "description": "deletes an existing user",
+    "params": { "id": { "type": "string" } },
+    "permission": "admin"
+  },
+  "user.getAll": {
+    "description": "returns all the existing users",
+    "params": {},
+    "permission": "admin"
+  },
+  "user.getAuthenticationTokens": {
+    "description": "returns authentication tokens of the current user",
+    "params": {}
+  },
+  "user.removeAuthProvider": {
+    "params": {
+      "authProvider": { "type": "string" },
+      "id": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "user.set": {
+    "description": "changes the properties of an existing user",
+    "params": {
+      "email": { "optional": true, "type": "string" },
+      "id": { "type": "string" },
+      "password": { "optional": true, "type": "string" },
+      "permission": { "optional": true, "type": "string" },
+      "preferences": { "optional": true, "type": "object" }
+    }
+  },
+  "vbd.connect": { "params": { "id": { "type": "string" } } },
+  "vbd.delete": { "params": { "id": { "type": "string" } } },
+  "vbd.disconnect": { "params": { "id": { "type": "string" } } },
+  "vbd.set": {
+    "params": {
+      "id": { "type": "string" },
+      "position": { "optional": true, "type": ["string", "number"] }
+    }
+  },
+  "vbd.setBootable": {
+    "params": { "bootable": { "type": "boolean" }, "vbd": { "type": "string" } }
+  },
+  "vdi.delete": { "params": { "id": { "type": "string" } } },
+  "vdi.migrate": {
+    "params": {
+      "id": { "type": "string" },
+      "resourceSet": { "optional": true, "type": "string" },
+      "sr_id": { "type": "string" }
+    }
+  },
+  "vdi.set": {
+    "params": {
+      "cbt": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" },
+      "size": { "optional": true, "type": ["integer", "string"] }
+    }
+  },
+  "vif.connect": { "params": { "id": { "type": "string" } } },
+  "vif.delete": { "params": { "id": { "type": "string" } } },
+  "vif.disconnect": { "params": { "id": { "type": "string" } } },
+  "vif.getLockingModeValues": { "params": {} },
+  "vif.set": {
+    "description": "Change properties of a VIF, its identifier is returned because it might change during the update",
+    "params": {
+      "allowedIpv4Addresses": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "allowedIpv6Addresses": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "attached": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" },
+      "lockingMode": { "optional": true, "type": "string" },
+      "mac": { "optional": true, "type": "string" },
+      "network": { "optional": true, "type": "string" },
+      "rateLimit": {
+        "description": "in kilobytes per seconds",
+        "optional": true,
+        "type": ["number", "null"]
+      },
+      "resourceSet": { "optional": true, "type": "string" },
+      "txChecksumming": { "optional": true, "type": "boolean" }
+    }
+  },
+  "vm.attachDisk": {
+    "params": {
+      "bootable": { "optional": true, "type": "boolean" },
+      "mode": { "optional": true, "type": "string" },
+      "position": { "optional": true, "type": "string" },
+      "vdi": { "type": "string" },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.attachPcis": {
+    "params": {
+      "id": { "type": "string" },
+      "pcis": { "items": { "type": "string" }, "type": "array" }
+    }
+  },
+  "vm.clone": {
+    "params": {
+      "full_copy": { "type": "boolean" },
+      "id": { "type": "string" },
+      "name": { "type": "string" }
+    }
+  },
+  "vm.coalesceLeaf": { "params": { "id": { "type": "string" } } },
+  "vm.convert": { "params": { "id": { "type": "string" } } },
+  "vm.convertToTemplate": { "params": { "id": { "type": "string" } } },
+  "vm.copy": {
+    "params": {
+      "compress": { "optional": true, "type": ["boolean", "string"] },
+      "name": { "optional": true, "type": "string" },
+      "sr": { "type": "string" },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.copyToTemplate": { "params": { "id": { "type": "string" } } },
+  "vm.create": {
+    "params": {
+      "*": {},
+      "VDIs": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "SR": { "type": "string" },
+            "size": { "type": ["integer", "string"] },
+            "type": { "type": "string" }
+          },
+          "type": "object"
+        },
+        "optional": true,
+        "type": "array"
+      },
+      "VIFs": {
+        "items": {
+          "properties": {
+            "allowedIpv4Addresses": {
+              "items": { "type": "string" },
+              "optional": true,
+              "type": "array"
+            },
+            "allowedIpv6Addresses": {
+              "items": { "type": "string" },
+              "optional": true,
+              "type": "array"
+            },
+            "mac": { "optional": true, "type": "string" },
+            "network": { "type": "string" }
+          },
+          "type": "object"
+        },
+        "optional": true,
+        "type": "array"
+      },
+      "acls": {
+        "items": {
+          "properties": {
+            "action": { "type": "string" },
+            "subject": { "type": "string" }
+          },
+          "type": "object"
+        },
+        "optional": true,
+        "type": "array"
+      },
+      "affinityHost": { "optional": true, "type": "string" },
+      "bootAfterCreate": { "optional": true, "type": "boolean" },
+      "clone": { "optional": true, "type": "boolean" },
+      "cloudConfig": { "optional": true, "type": "string" },
+      "copyHostBiosStrings": { "optional": true, "type": "boolean" },
+      "coreOs": { "optional": true, "type": "boolean" },
+      "coresPerSocket": { "optional": true, "type": ["string", "number"] },
+      "createVtpm": { "default": false, "type": "boolean" },
+      "destroyCloudConfigVdiAfterBoot": { "optional": true, "type": "boolean" },
+      "existingDisks": {
+        "additionalProperties": {
+          "additionalProperties": true,
+          "properties": {
+            "$SR": { "optional": true, "type": "string" },
+            "size": { "optional": true, "type": ["integer", "string"] }
+          },
+          "type": "object"
+        },
+        "optional": true,
+        "type": "object"
+      },
+      "gpuGroup": { "optional": true, "type": "string" },
+      "hvmBootFirmware": { "optional": true, "type": "string" },
+      "installation": {
+        "optional": true,
+        "properties": {
+          "method": { "type": "string" },
+          "repository": { "type": "string" }
+        },
+        "type": "object"
+      },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "type": "string" },
+      "networkConfig": { "optional": true, "type": "string" },
+      "pv_args": { "optional": true, "type": "string" },
+      "resourceSet": { "optional": true, "type": "string" },
+      "share": { "optional": true, "type": "boolean" },
+      "template": { "type": "string" },
+      "vgpuType": { "optional": true, "type": "string" }
+    }
+  },
+  "vm.createCloudInitConfigDrive": {
+    "params": {
+      "config": { "type": "string" },
+      "networkConfig": { "optional": true, "type": "string" },
+      "sr": { "type": "string" },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.createInterface": {
+    "params": {
+      "allowedIpv4Addresses": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "allowedIpv6Addresses": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "mac": { "optional": true, "type": "string" },
+      "network": { "type": "string" },
+      "position": { "optional": true, "type": ["integer", "string"] },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.createVgpu": {
+    "params": {
+      "gpuGroup": { "type": "string" },
+      "vgpuType": { "type": "string" },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.delete": {
+    "params": {
+      "deleteDisks": { "optional": true, "type": "boolean" },
+      "force": { "optional": true, "type": "boolean" },
+      "forceBlockedOperation": { "optional": true, "type": "boolean" },
+      "forceDeleteDefaultTemplate": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.deleteVgpu": { "params": { "vgpu": { "type": "string" } } },
+  "vm.detachPcis": {
+    "params": {
+      "id": { "type": "string" },
+      "pciIds": { "items": { "type": "string" }, "type": "array" }
+    }
+  },
+  "vm.ejectCd": { "params": { "id": { "type": "string" } } },
+  "vm.export": {
+    "params": {
+      "compress": { "optional": true, "type": ["boolean", "string"] },
+      "format": { "enum": ["xva", "ova"], "optional": true },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.getCloudInitConfig": { "params": { "template": { "type": "string" } } },
+  "vm.getHaValues": { "params": {} },
+  "vm.getSecurebootReadiness": {
+    "params": {
+      "forceRefresh": { "default": false, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.import": {
+    "params": {
+      "data": {
+        "additionalProperties": true,
+        "optional": true,
+        "properties": {
+          "descriptionLabel": { "minLength": 0, "type": "string" },
+          "disks": {
+            "items": {
+              "properties": {
+                "capacity": { "type": "integer" },
+                "descriptionLabel": { "minLength": 0, "type": "string" },
+                "nameLabel": { "type": "string" },
+                "path": { "type": "string" },
+                "position": { "type": "integer" }
+              },
+              "type": "object"
+            },
+            "optional": true,
+            "type": "array"
+          },
+          "memory": { "type": "integer" },
+          "nCpus": { "type": "integer" },
+          "nameLabel": { "type": "string" },
+          "networks": {
+            "items": { "type": "string" },
+            "optional": true,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "sr": { "type": "string" },
+      "type": { "optional": true, "type": "string" },
+      "url": { "optional": true, "type": "string" }
+    }
+  },
+  "vm.importFromEsxi": {
+    "params": {
+      "host": { "type": "string" },
+      "network": { "type": "string" },
+      "password": { "type": "string" },
+      "sr": { "type": "string" },
+      "sslVerify": { "optional": true, "type": "boolean" },
+      "stopSource": { "optional": true, "type": "boolean" },
+      "template": { "type": "string" },
+      "user": { "type": "string" },
+      "vm": { "type": "string" },
+      "workDirRemote": { "optional": true, "type": "string" }
+    }
+  },
+  "vm.importMultipleFromEsxi": {
+    "params": {
+      "concurrency": {
+        "default": 2,
+        "description": "number of VM imports in parallel (the disks are imported in parallel in each VM import)",
+        "optional": true,
+        "type": "number"
+      },
+      "host": { "type": "string" },
+      "network": { "type": "string" },
+      "password": { "type": "string" },
+      "sr": { "type": "string" },
+      "sslVerify": { "default": true, "optional": true, "type": "boolean" },
+      "stopOnError": {
+        "default": false,
+        "description": "should the import stop on the first error , default true . Warning, change the response format",
+        "optional": true,
+        "type": "boolean"
+      },
+      "stopSource": { "default": false, "optional": true, "type": "boolean" },
+      "template": { "type": "string" },
+      "thin": { "default": false, "optional": true, "type": "boolean" },
+      "user": { "type": "string" },
+      "vms": {
+        "items": {
+          "description": "VM id to be imported, if used from cli use this syntax :  vms=json:'[\"2\",\"9\",\"18\"]'",
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "workDirRemote": { "optional": true, "type": "string" }
+    }
+  },
+  "vm.insertCd": {
+    "params": {
+      "cd_id": { "type": "string" },
+      "force": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.migrate": {
+    "params": {
+      "bypassAssert": {
+        "description": "Bypass the verification asserting whether a VM can be migrated to the specified destination",
+        "optional": true,
+        "type": "boolean"
+      },
+      "force": { "optional": true, "type": "boolean" },
+      "mapVdisSrs": { "optional": true, "type": "object" },
+      "mapVifsNetworks": { "optional": true, "type": "object" },
+      "migrationNetwork": { "optional": true, "type": "string" },
+      "sr": { "optional": true, "type": "string" },
+      "targetHost": { "type": "string" },
+      "vm": { "type": "string" }
+    }
+  },
+  "vm.pause": { "params": { "id": { "type": "string" } } },
+  "vm.recoveryStart": { "params": { "id": { "type": "string" } } },
+  "vm.restart": {
+    "params": {
+      "bypassBlockedOperation": { "optional": true, "type": "boolean" },
+      "force": { "optional": true, "type": "boolean" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.resume": { "params": { "id": { "type": "string" } } },
+  "vm.revert": { "params": { "snapshot": { "type": "string" } } },
+  "vm.set": {
+    "params": {
+      "CPUs": { "optional": true, "type": "integer" },
+      "PV_args": { "optional": true, "type": "string" },
+      "affinityHost": { "optional": true, "type": ["string", "null"] },
+      "auto_poweron": { "optional": true, "type": "boolean" },
+      "blockedOperations": {
+        "optional": true,
+        "properties": { "*": { "type": ["boolean", "null", "string"] } },
+        "type": "object"
+      },
+      "coresPerSocket": {
+        "optional": true,
+        "type": ["string", "number", "null"]
+      },
+      "cpuCap": { "optional": true, "type": ["integer", "null"] },
+      "cpuMask": { "optional": true, "type": "array" },
+      "cpuWeight": { "optional": true, "type": ["integer", "null"] },
+      "cpusMax": { "optional": true, "type": ["integer", "string"] },
+      "creation": {
+        "optional": true,
+        "properties": { "user": { "optional": true, "type": "string" } },
+        "type": "object"
+      },
+      "expNestedHvm": { "optional": true, "type": "boolean" },
+      "hasVendorDevice": { "optional": true, "type": "boolean" },
+      "high_availability": {
+        "enum": ["best-effort", "restart", ""],
+        "optional": true
+      },
+      "hvmBootFirmware": { "optional": true, "type": ["string", "null"] },
+      "id": { "type": "string" },
+      "memory": { "optional": true, "type": ["integer", "string"] },
+      "memoryMax": { "optional": true, "type": ["integer", "string"] },
+      "memoryMin": { "optional": true, "type": ["integer", "string"] },
+      "memoryStaticMax": { "optional": true, "type": ["integer", "string"] },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" },
+      "nestedVirt": { "optional": true, "type": "boolean" },
+      "nicType": { "optional": true, "type": ["string", "null"] },
+      "notes": {
+        "maxLength": 2048,
+        "optional": true,
+        "type": ["string", "null"]
+      },
+      "resourceSet": { "optional": true, "type": ["string", "null"] },
+      "secureBoot": { "optional": true, "type": "boolean" },
+      "share": { "optional": true, "type": "boolean" },
+      "startDelay": { "optional": true, "type": "integer" },
+      "suspendSr": { "optional": true, "type": ["string", "null"] },
+      "uefiMode": { "enum": ["setup", "user"], "optional": true },
+      "vga": { "optional": true, "type": "string" },
+      "videoram": { "optional": true, "type": "number" },
+      "viridian": { "optional": true, "type": "boolean" },
+      "virtualizationMode": { "optional": true, "type": "string" },
+      "xenStoreData": {
+        "additionalProperties": { "type": ["null", "string"] },
+        "description": "properties that should be set or deleted (if null) in the VM XenStore",
+        "optional": true,
+        "type": "object"
+      }
+    }
+  },
+  "vm.setAndRestart": {
+    "params": {
+      "CPUs": { "optional": true, "type": "integer" },
+      "PV_args": { "optional": true, "type": "string" },
+      "affinityHost": { "optional": true, "type": ["string", "null"] },
+      "auto_poweron": { "optional": true, "type": "boolean" },
+      "blockedOperations": {
+        "optional": true,
+        "properties": { "*": { "type": ["boolean", "null", "string"] } },
+        "type": "object"
+      },
+      "coresPerSocket": {
+        "optional": true,
+        "type": ["string", "number", "null"]
+      },
+      "cpuCap": { "optional": true, "type": ["integer", "null"] },
+      "cpuMask": { "optional": true, "type": "array" },
+      "cpuWeight": { "optional": true, "type": ["integer", "null"] },
+      "cpusMax": { "optional": true, "type": ["integer", "string"] },
+      "creation": {
+        "optional": true,
+        "properties": { "user": { "optional": true, "type": "string" } },
+        "type": "object"
+      },
+      "expNestedHvm": { "optional": true, "type": "boolean" },
+      "force": { "optional": true, "type": "boolean" },
+      "hasVendorDevice": { "optional": true, "type": "boolean" },
+      "high_availability": {
+        "enum": ["best-effort", "restart", ""],
+        "optional": true
+      },
+      "hvmBootFirmware": { "optional": true, "type": ["string", "null"] },
+      "id": { "type": "string" },
+      "memory": { "optional": true, "type": ["integer", "string"] },
+      "memoryMax": { "optional": true, "type": ["integer", "string"] },
+      "memoryMin": { "optional": true, "type": ["integer", "string"] },
+      "memoryStaticMax": { "optional": true, "type": ["integer", "string"] },
+      "name_description": {
+        "minLength": 0,
+        "optional": true,
+        "type": "string"
+      },
+      "name_label": { "optional": true, "type": "string" },
+      "nestedVirt": { "optional": true, "type": "boolean" },
+      "nicType": { "optional": true, "type": ["string", "null"] },
+      "notes": {
+        "maxLength": 2048,
+        "optional": true,
+        "type": ["string", "null"]
+      },
+      "resourceSet": { "optional": true, "type": ["string", "null"] },
+      "secureBoot": { "optional": true, "type": "boolean" },
+      "share": { "optional": true, "type": "boolean" },
+      "startDelay": { "optional": true, "type": "integer" },
+      "suspendSr": { "optional": true, "type": ["string", "null"] },
+      "uefiMode": { "enum": ["setup", "user"], "optional": true },
+      "vga": { "optional": true, "type": "string" },
+      "videoram": { "optional": true, "type": "number" },
+      "viridian": { "optional": true, "type": "boolean" },
+      "virtualizationMode": { "optional": true, "type": "string" },
+      "xenStoreData": {
+        "additionalProperties": { "type": ["null", "string"] },
+        "description": "properties that should be set or deleted (if null) in the VM XenStore",
+        "optional": true,
+        "type": "object"
+      }
+    }
+  },
+  "vm.setBootOrder": {
+    "params": { "order": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "vm.snapshot": {
+    "params": {
+      "description": { "minLength": 0, "optional": true, "type": "string" },
+      "id": { "type": "string" },
+      "name": { "optional": true, "type": "string" },
+      "saveMemory": { "optional": true, "type": "boolean" }
+    }
+  },
+  "vm.start": {
+    "params": {
+      "bypassMacAddressesCheck": { "optional": true, "type": "boolean" },
+      "force": { "optional": true, "type": "boolean" },
+      "host": { "optional": true, "type": "string" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.stats": {
+    "description": "returns statistics about the VM",
+    "params": {
+      "granularity": { "optional": true, "type": "string" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.stop": {
+    "params": {
+      "bypassBlockedOperation": { "optional": true, "type": "boolean" },
+      "force": { "optional": true, "type": "boolean" },
+      "forceShutdownDelay": { "default": 0, "type": "number" },
+      "id": { "type": "string" }
+    }
+  },
+  "vm.suspend": { "params": { "id": { "type": "string" } } },
+  "vm.warmMigration": {
+    "params": {
+      "deleteSourceVm": { "type": "boolean" },
+      "sr": { "type": "string" },
+      "startDestinationVm": { "type": "boolean" },
+      "vm": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "vtpm.create": {
+    "description": "create a VTPM",
+    "params": { "id": { "type": "string" } }
+  },
+  "vtpm.destroy": {
+    "description": "destroy a VTPM",
+    "params": { "id": { "type": "string" } }
+  },
+  "vusb.create": {
+    "params": { "usbGroup": { "type": "string" }, "vm": { "type": "string" } }
+  },
+  "vusb.destroy": { "params": { "id": { "type": "string" } } },
+  "vusb.unplug": { "params": { "id": { "type": "string" } } },
+  "xo.clean": { "params": {}, "permission": "admin" },
+  "xo.exportConfig": {
+    "params": {
+      "compress": { "default": true, "type": "boolean" },
+      "entries": {
+        "items": { "type": "string" },
+        "optional": true,
+        "type": "array"
+      },
+      "passphrase": { "optional": true, "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xo.getAllObjects": {
+    "description": "Returns all XO objects",
+    "params": {
+      "filter": { "optional": true, "type": ["object", "string"] },
+      "limit": { "optional": true, "type": "number" },
+      "ndjson": { "optional": true, "type": "boolean" }
+    }
+  },
+  "xo.importConfig": {
+    "params": { "passphrase": { "optional": true, "type": "string" } },
+    "permission": "admin"
+  },
+  "xosan.addBricks": {
+    "description": "add brick to XOSAN SR",
+    "params": {
+      "brickSize": { "type": "number" },
+      "lvmsrs": { "items": { "type": "string" }, "type": "array" },
+      "xosansr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.checkSrCurrentState": {
+    "description": "checks if there is an operation currently running on the SR",
+    "params": { "poolId": { "type": "string" } },
+    "permission": "admin"
+  },
+  "xosan.computeXosanPossibleOptions": {
+    "params": {
+      "brickSize": { "optional": true, "type": "number" },
+      "lvmSrs": { "items": { "type": "string" }, "type": "array" }
+    }
+  },
+  "xosan.createSR": {
+    "description": "create gluster VM",
+    "params": {
+      "brickSize": { "optional": true, "type": "number" },
+      "glusterType": { "type": "string" },
+      "ipRange": { "optional": true, "type": "string" },
+      "memorySize": { "optional": true, "type": "number" },
+      "pif": { "type": "string" },
+      "redundancy": { "type": "number" },
+      "srs": { "items": { "type": "string" }, "type": "array" },
+      "template": { "type": "object" },
+      "vlan": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.downloadAndInstallXosanPack": {
+    "description": "Register a resource via cloud plugin",
+    "params": {
+      "id": { "type": "string" },
+      "pool": { "type": "string" },
+      "version": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.fixHostNotInNetwork": {
+    "description": "put host in xosan network",
+    "params": { "host": { "type": "string" }, "xosanSr": { "type": "string" } },
+    "permission": "admin"
+  },
+  "xosan.getVolumeInfo": {
+    "description": "info on gluster volume",
+    "params": {
+      "infoType": {
+        "enum": [
+          "heal",
+          "status",
+          "statusDetail",
+          "statusMem",
+          "info",
+          "profile",
+          "profileTop",
+          "hosts"
+        ]
+      },
+      "sr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.profileStatus": {
+    "description": "activate, deactivate, or interrogate profile data",
+    "params": {
+      "changeStatus": { "optional": true, "type": "boolean" },
+      "sr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.removeBricks": {
+    "description": "remove brick from XOSAN SR",
+    "params": {
+      "bricks": { "items": { "type": "string" }, "type": "array" },
+      "xosansr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.replaceBrick": {
+    "description": "replaceBrick brick in gluster volume",
+    "params": {
+      "brickSize": { "type": "number" },
+      "newLvmSr": { "type": "string" },
+      "previousBrick": { "type": "string" },
+      "xosansr": { "type": "string" }
+    },
+    "permission": "admin"
+  },
+  "xosan.unlock": {
+    "description": "Unlock XOSAN SR functionalities by binding it to a paid license",
+    "params": { "licenseId": { "type": "string" }, "sr": { "type": "string" } },
+    "permission": "admin"
+  },
+  "xostor.create": {
+    "description": "Create a XOSTOR storage",
+    "params": {
+      "description": {
+        "default": "From XO-server",
+        "optional": true,
+        "type": "string"
+      },
+      "disksByHost": { "type": "object" },
+      "force": { "default": false, "optional": true, "type": "boolean" },
+      "ignoreFileSystems": {
+        "default": false,
+        "optional": true,
+        "type": "boolean"
+      },
+      "name": { "type": "string" },
+      "preferredInterface": {
+        "optional": true,
+        "properties": {
+          "name": { "type": "string" },
+          "networkId": { "type": "string" }
+        },
+        "type": "object"
+      },
+      "provisioning": { "enum": ["thin", "thick"] },
+      "replication": { "type": "number" }
+    },
+    "permission": "admin"
+  },
+  "xostor.createInterface": {
+    "description": "Create a linstor interface",
+    "params": {
+      "name": { "type": "string" },
+      "network": { "type": "string" },
+      "sr": { "type": "string" }
+    }
+  },
+  "xostor.destroy": {
+    "description": "Destroy a XOSTOR storage",
+    "params": { "sr": { "type": "string" } },
+    "permission": "admin"
+  },
+  "xostor.destroyInterface": {
+    "description": "Destroy a linstor interface",
+    "params": { "name": { "type": "string" }, "sr": { "type": "string" } }
+  },
+  "xostor.formatDisks": {
+    "description": "Format disks for a XOSTOR use",
+    "params": {
+      "disks": { "items": { "type": "string" }, "type": "array" },
+      "force": { "default": false, "optional": true, "type": "boolean" },
+      "host": { "type": "string" },
+      "ignoreFileSystems": {
+        "default": false,
+        "optional": true,
+        "type": "boolean"
+      },
+      "provisioning": { "enum": ["thin", "thick"] }
+    },
+    "permission": "admin"
+  },
+  "xostor.getInterfaces": {
+    "description": "Get linstor available interfaces",
+    "params": { "sr": { "type": "string" } }
+  },
+  "xostor.healthCheck": { "params": { "sr": { "type": "string" } } },
+  "xostor.installDependencies": {
+    "description": "Install XOSTOR dependencies",
+    "params": { "host": { "type": "string" } },
+    "permission": "admin"
+  },
+  "xostor.set": {
+    "description": "Changes the properties of an existing XOSTOR storage",
+    "params": {
+      "preferredInterface": { "optional": true, "type": "string" },
+      "sr": { "type": "string" }
+    }
+  },
+  "xostor.updateDependencies": {
+    "description": "Update XOSTOR dependencies",
+    "params": { "host": { "type": "string" } },
+    "permission": "admin"
+  }
+}

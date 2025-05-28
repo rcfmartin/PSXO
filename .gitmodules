@@ -1,0 +1,3 @@
+[submodule "psxo.wiki"]
+	path = psxo.wiki
+	url = git@10.0.0.6:rcfmartin/psxo.wiki.git
