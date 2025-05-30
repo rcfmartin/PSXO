@@ -22,7 +22,8 @@ Update-XoVirtualMachine [-Session] <XoSession> [-Id] <String> [[-Tag] <String[]>
  [[-NestedVirt] <Boolean>] [[-ResourceSet] <String>] [[-Share] <Boolean>] [[-StartDelay] <Int64>]
  [[-SecureBoot] <Boolean>] [[-NicType] <String>] [[-HvmBootFirmware] <String>] [[-VirtualizationMode] <String>]
  [[-Viridian] <Boolean>] [[-BlockedOperations] <Object>] [[-Creation] <Object>] [[-SuspendSr] <String>]
- [[-UefiMode] <String>] [[-XenStoreData] <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-UefiMode] <String>] [[-XenStoreData] <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -617,6 +618,37 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProgressAction
 {{ Fill ProgressAction Description }}
 
@@ -639,6 +671,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### XoVirtualMachine
 ## NOTES
 General notes
 

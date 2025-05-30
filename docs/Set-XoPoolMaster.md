@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-XoPoolMaster
 
 ## SYNOPSIS
-Set default SR for the pool
+Set pool master
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Set-XoPoolMaster [-Session] <XoSession> [-HostId] <String> [-ProgressAction <Act
 ```
 
 ## DESCRIPTION
-Set default SR for the pool
+Set pool master
 
 ## EXAMPLES
 
