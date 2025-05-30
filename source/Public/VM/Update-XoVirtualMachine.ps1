@@ -134,7 +134,8 @@ Update-XoVirtualMachine -Session $sess -Id $vm.Id -NameLabel "RockyLinux" -Cpus 
 .NOTES
 General notes
 #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [OutputType([XoVirtualMachine])]
     param (
         [Parameter(Mandatory = $true)]
         [XoSession]
@@ -299,171 +300,186 @@ General notes
 
     process
     {
-        [hashtable]$params = @{
-            id = $Id
-        }
-        if ($PSBoundParameters.ContainsKey("AutoPoweron"))
+        if ($PSCmdlet.ShouldProcess($Id, "Update VM"))
         {
-            $params["auto_poweron"] = $AutoPoweron
-        }
-        if ($PSBoundParameters.ContainsKey("NameLabel"))
-        {
-            $params["name_label"] = $NameLabel
-        }
-        if ($PSBoundParameters.ContainsKey("NameDescription"))
-        {
-            $params["name_description"] = $NameDescription
-        }
-        if ($PSBoundParameters.ContainsKey("Notes"))
-        {
-            $params["notes"] = $Notes
-        }
-        if ($PSBoundParameters.ContainsKey("HighAvailability"))
-        {
-            $params["high_availability"] = $HighAvailability
-        }
-        if ($PSBoundParameters.ContainsKey("Cpus"))
-        {
-            $params["CPUs"] = $Cpus
-        }
-        if ($PSBoundParameters.ContainsKey("CpusMax"))
-        {
-            $params["cpusMax"] = $CpusMax
-        }
-        if ($PSBoundParameters.ContainsKey("Memory"))
-        {
-            $params["memory"] = $($Memory)
-        }
-        if ($PSBoundParameters.ContainsKey("MemoryMin"))
-        {
-            $params["memoryMin"] = $($MemoryMin)
-        }
-        if ($PSBoundParameters.ContainsKey("MemoryMax"))
-        {
-            $params["memoryMax"] = $($MemoryMax)
-        }
-        if ($PSBoundParameters.ContainsKey("MemoryStaticMax"))
-        {
-            $params["memoryStaticMax"] = $($MemoryStaticMax)
-        }
-        if ($PSBoundParameters.ContainsKey("PvArgs"))
-        {
-            $params["PV_args"] = $PvArgs
-        }
-        if ($PSBoundParameters.ContainsKey("CpuMask"))
-        {
-            $params["cpuMask"] = $CpuMask
-        }
-        if ($PSBoundParameters.ContainsKey("CpuWeight"))
-        {
-            $params["cpuWeight"] = $CpuWeight
-        }
-        if ($PSBoundParameters.ContainsKey("CpuCap"))
-        {
-            $params["cpuCap"] = $CpuCap
-        }
-        if ($PSBoundParameters.ContainsKey("AffinityHost"))
-        {
-            $params["affinityHost"] = $AffinityHost
-        }
-        if ($PSBoundParameters.ContainsKey("Vga"))
-        {
-            $params["vga"] = $Vga
-        }
-        if ($PSBoundParameters.ContainsKey("Videoram"))
-        {
-            $params["videoram"] = $Videoram
-        }
-        if ($PSBoundParameters.ContainsKey("CoresPerSocket"))
-        {
-            $params["coresPerSocket"] = $CoresPerSocket
-        }
-        if ($PSBoundParameters.ContainsKey("HasVendorDevice"))
-        {
-            $params["hasVendorDevice"] = $HasVendorDevice
-        }
-        if ($PSBoundParameters.ContainsKey("ExpNestedHvm"))
-        {
-            $params["expNestedHvm"] = $ExpNestedHvm
-        }
-        if ($PSBoundParameters.ContainsKey("NestedVirt"))
-        {
-            $params["nestedVirt"] = $NestedVirt
-        }
-        if ($PSBoundParameters.ContainsKey("ResourceSet"))
-        {
-            $params["resourceSet"] = $ResourceSet
-        }
-        if ($PSBoundParameters.ContainsKey("Share"))
-        {
-            $params["share"] = $Share
-        }
-        if ($PSBoundParameters.ContainsKey("StartDelay"))
-        {
-            $params["startDelay"] = $StartDelay
-        }
-        if ($PSBoundParameters.ContainsKey("SecureBoot"))
-        {
-            $params["secureBoot"] = $SecureBoot
-        }
-        if ($PSBoundParameters.ContainsKey("NicType"))
-        {
-            $params["nicType"] = $NicType
-        }
-        if ($PSBoundParameters.ContainsKey("HvmBootFirmware"))
-        {
-            $params["hvmBootFirmware"] = $HvmBootFirmware
-        }
-        if ($PSBoundParameters.ContainsKey("VirtualizationMode"))
-        {
-            $params["virtualizationMode"] = $VirtualizationMode
-        }
-        if ($PSBoundParameters.ContainsKey("Viridian"))
-        {
-            $params["viridian"] = $Viridian
-        }
-        if ($PSBoundParameters.ContainsKey("BlockedOperations"))
-        {
-            $params["blockedOperations"] = $BlockedOperations
-        }
-        if ($PSBoundParameters.ContainsKey("Creation"))
-        {
-            $params["creation"] = $Creation
-        }
-        if ($PSBoundParameters.ContainsKey("SuspendSr"))
-        {
-            $params["suspendSr"] = $SuspendSr
-        }
-        if ($PSBoundParameters.ContainsKey("UefiMode"))
-        {
-            $params["uefiMode"] = $UefiMode
-        }
-        if ($PSBoundParameters.ContainsKey("XenStoreData"))
-        {
-            $params["xenStoreData"] = $XenStoreData
-        }
+            [hashtable]$params = @{
+                id = $Id
+            }
+            if ($PSBoundParameters.ContainsKey("AutoPoweron"))
+            {
+                $params["auto_poweron"] = $AutoPoweron
+            }
+            if ($PSBoundParameters.ContainsKey("NameLabel"))
+            {
+                $params["name_label"] = $NameLabel
+            }
+            if ($PSBoundParameters.ContainsKey("NameDescription"))
+            {
+                $params["name_description"] = $NameDescription
+            }
+            if ($PSBoundParameters.ContainsKey("Notes"))
+            {
+                $params["notes"] = $Notes
+            }
+            if ($PSBoundParameters.ContainsKey("HighAvailability"))
+            {
+                $params["high_availability"] = $HighAvailability
+            }
+            if ($PSBoundParameters.ContainsKey("Cpus"))
+            {
+                $params["CPUs"] = $Cpus
+            }
+            if ($PSBoundParameters.ContainsKey("CpusMax"))
+            {
+                $params["cpusMax"] = $CpusMax
+            }
+            if ($PSBoundParameters.ContainsKey("Memory"))
+            {
+                $params["memory"] = $($Memory)
+            }
+            if ($PSBoundParameters.ContainsKey("MemoryMin"))
+            {
+                $params["memoryMin"] = $($MemoryMin)
+            }
+            if ($PSBoundParameters.ContainsKey("MemoryMax"))
+            {
+                $params["memoryMax"] = $($MemoryMax)
+            }
+            if ($PSBoundParameters.ContainsKey("MemoryStaticMax"))
+            {
+                $params["memoryStaticMax"] = $($MemoryStaticMax)
+            }
+            if ($PSBoundParameters.ContainsKey("PvArgs"))
+            {
+                $params["PV_args"] = $PvArgs
+            }
+            if ($PSBoundParameters.ContainsKey("CpuMask"))
+            {
+                $params["cpuMask"] = $CpuMask
+            }
+            if ($PSBoundParameters.ContainsKey("CpuWeight"))
+            {
+                $params["cpuWeight"] = $CpuWeight
+            }
+            if ($PSBoundParameters.ContainsKey("CpuCap"))
+            {
+                $params["cpuCap"] = $CpuCap
+            }
+            if ($PSBoundParameters.ContainsKey("AffinityHost"))
+            {
+                $params["affinityHost"] = $AffinityHost
+            }
+            if ($PSBoundParameters.ContainsKey("Vga"))
+            {
+                $params["vga"] = $Vga
+            }
+            if ($PSBoundParameters.ContainsKey("Videoram"))
+            {
+                $params["videoram"] = $Videoram
+            }
+            if ($PSBoundParameters.ContainsKey("CoresPerSocket"))
+            {
+                $params["coresPerSocket"] = $CoresPerSocket
+            }
+            if ($PSBoundParameters.ContainsKey("HasVendorDevice"))
+            {
+                $params["hasVendorDevice"] = $HasVendorDevice
+            }
+            if ($PSBoundParameters.ContainsKey("ExpNestedHvm"))
+            {
+                $params["expNestedHvm"] = $ExpNestedHvm
+            }
+            if ($PSBoundParameters.ContainsKey("NestedVirt"))
+            {
+                $params["nestedVirt"] = $NestedVirt
+            }
+            if ($PSBoundParameters.ContainsKey("ResourceSet"))
+            {
+                $params["resourceSet"] = $ResourceSet
+            }
+            if ($PSBoundParameters.ContainsKey("Share"))
+            {
+                $params["share"] = $Share
+            }
+            if ($PSBoundParameters.ContainsKey("StartDelay"))
+            {
+                $params["startDelay"] = $StartDelay
+            }
+            if ($PSBoundParameters.ContainsKey("SecureBoot"))
+            {
+                $params["secureBoot"] = $SecureBoot
+            }
+            if ($PSBoundParameters.ContainsKey("NicType"))
+            {
+                $params["nicType"] = $NicType
+            }
+            if ($PSBoundParameters.ContainsKey("HvmBootFirmware"))
+            {
+                $params["hvmBootFirmware"] = $HvmBootFirmware
+            }
+            if ($PSBoundParameters.ContainsKey("VirtualizationMode"))
+            {
+                $params["virtualizationMode"] = $VirtualizationMode
+            }
+            if ($PSBoundParameters.ContainsKey("Viridian"))
+            {
+                $params["viridian"] = $Viridian
+            }
+            if ($PSBoundParameters.ContainsKey("BlockedOperations"))
+            {
+                $params["blockedOperations"] = $BlockedOperations
+            }
+            if ($PSBoundParameters.ContainsKey("Creation"))
+            {
+                $params["creation"] = $Creation
+            }
+            if ($PSBoundParameters.ContainsKey("SuspendSr"))
+            {
+                $params["suspendSr"] = $SuspendSr
+            }
+            if ($PSBoundParameters.ContainsKey("UefiMode"))
+            {
+                $params["uefiMode"] = $UefiMode
+            }
+            if ($PSBoundParameters.ContainsKey("XenStoreData"))
+            {
+                $params["xenStoreData"] = $XenStoreData
+            }
 
-        if ($PSBoundParameters.ContainsKey("Tag"))
-        {
+            if ($PSBoundParameters.ContainsKey("Tag"))
+            {
+                try
+                {
+                    $null = Add-XoTag -Session $Session -Id $Id -Tag $Tag -ErrorAction Stop
+                }
+                catch
+                {
+                    throw $_.Exception.Message
+                }
+            }
             try
             {
-                $null = Add-XoTag -Session $Session -Id $Id -Tag $Tag -ErrorAction Stop
+                $body = New-JsonRpcRequest -Method "vm.set" -Params $params
+                $null = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
             }
             catch
             {
                 throw $_.Exception.Message
             }
-        }
-        try
-        {
-            $body = New-JsonRpcRequest -Method "vm.set" -Params $params
-            $null = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
 
+            try
+            {
+                $vm = Get-XoVirtualMachine -Session $Session -Id $Id -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_
+            }
+            if ($vm)
+            {
+                return $vm
+            }
+        }
     }
 
     end

@@ -32,7 +32,7 @@ function Update-XoRemote
     $sess = New-XoSession -Uri "https://xo.example.com" -Token "Caywizq1kyz7G2mg25Tc2rk_KxgIb063DnM4ScqdMVE"
     Update-XoRemote -Session $Session -Name "test" -Url "nfs://10.0.0.99:/mnt/MyShares/test"
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([XoRemote])]
     param (
         [Parameter(Mandatory = $true)]
@@ -74,64 +74,65 @@ function Update-XoRemote
 
     process
     {
-
-        $params = @{
-            id = $Id
-        }
-        if ($PSBoundParameters.ContainsKey("Name"))
+        if ($PSCmdlet.ShouldProcess($Id, "Update Remote"))
         {
-            $params["name"] = $Name
-        }
-        if ($PSBoundParameters.ContainsKey("Url"))
-        {
-            $params["url"] = $Url
-        }
-        if ($PSBoundParameters.ContainsKey("Options"))
-        {
-            $params["options"] = $Options
-        }
-        if ($PSBoundParameters.ContainsKey("Proxy"))
-        {
-            $params["proxy"] = $Proxy
-        }
-        if ($PSBoundParameters.ContainsKey("Enabled"))
-        {
-            $params["enabled"] = $Enabled
-        }
-
-        try
-        {
-            $body = New-JsonRpcRequest -Method "remote.set" -Params $params
-            $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
-
-        if ($null -ne $resp)
-        {
-            if ($resp.result.error)
-            {
-                throw $resp.result.error
+            $params = @{
+                id = $Id
             }
+            if ($PSBoundParameters.ContainsKey("Name"))
+            {
+                $params["name"] = $Name
+            }
+            if ($PSBoundParameters.ContainsKey("Url"))
+            {
+                $params["url"] = $Url
+            }
+            if ($PSBoundParameters.ContainsKey("Options"))
+            {
+                $params["options"] = $Options
+            }
+            if ($PSBoundParameters.ContainsKey("Proxy"))
+            {
+                $params["proxy"] = $Proxy
+            }
+            if ($PSBoundParameters.ContainsKey("Enabled"))
+            {
+                $params["enabled"] = $Enabled
+            }
+
             try
             {
-                $remote = Get-XoRemote -Session $Session -Id $Id -ErrorAction Stop
+                $body = New-JsonRpcRequest -Method "remote.set" -Params $params
+                $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
             }
             catch
             {
                 throw $_.Exception.Message
             }
+
+            if ($null -ne $resp)
+            {
+                if ($resp.result.error)
+                {
+                    throw $resp.result.error
+                }
+                try
+                {
+                    $remote = Get-XoRemote -Session $Session -Id $Id -ErrorAction Stop
+                }
+                catch
+                {
+                    throw $_.Exception.Message
+                }
+            }
+            if ($remote)
+            {
+                return $remote
+            }
         }
-
     }
-
     end
     {
-        if ($remote)
-        {
-            return $remote
-        }
+
     }
 }

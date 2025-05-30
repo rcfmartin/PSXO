@@ -1,0 +1,182 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">DscResource.AnalyzerRules</S>
+      <S N="Version">0.2.0</S>
+      <S N="Type">Module</S>
+      <S N="Description">PS Script Analyzer Custom Rules for the DSC Community standards</S>
+      <S N="Author">DSC Community</S>
+      <S N="CompanyName">dsccommunity</S>
+      <S N="Copyright">(c) 2019 dsccommunity.org. All rights reserved.</S>
+      <DT N="PublishedDate">2019-11-21T01:41:34-06:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <Nil N="LicenseUri" />
+      <Nil N="ProjectUri" />
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>PSScriptAnalyzer</S>
+          <S>PSSA</S>
+          <S>Analyzer</S>
+          <S>AnalyzerRules</S>
+          <S>DesiredStateConfiguration</S>
+          <S>DSC</S>
+          <S>DSCResourceKit</S>
+          <S>DSCResource</S>
+          <S>Windows</S>
+          <S>MacOS</S>
+          <S>Linux</S>
+          <S>PSModule</S>
+          <S>PSEdition_Desktop</S>
+          <S>PSEdition_Core</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Measure-CatchClause</S>
+                <S>Measure-DoUntilStatement</S>
+                <S>Measure-DoWhileStatement</S>
+                <S>Measure-ForEachStatement</S>
+                <S>Measure-ForStatement</S>
+                <S>Measure-FunctionBlockBrace</S>
+                <S>Measure-Hashtable</S>
+                <S>Measure-IfStatement</S>
+                <S>Measure-Keyword</S>
+                <S>Measure-ParameterBlockMandatoryNamedArgument</S>
+                <S>Measure-ParameterBlockParameterAttribute</S>
+                <S>Measure-SwitchStatement</S>
+                <S>Measure-TryStatement</S>
+                <S>Measure-TypeDefinition</S>
+                <S>Measure-WhileStatement</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Measure-CatchClause</S>
+                <S>Measure-DoUntilStatement</S>
+                <S>Measure-DoWhileStatement</S>
+                <S>Measure-ForEachStatement</S>
+                <S>Measure-ForStatement</S>
+                <S>Measure-FunctionBlockBrace</S>
+                <S>Measure-Hashtable</S>
+                <S>Measure-IfStatement</S>
+                <S>Measure-Keyword</S>
+                <S>Measure-ParameterBlockMandatoryNamedArgument</S>
+                <S>Measure-ParameterBlockParameterAttribute</S>
+                <S>Measure-SwitchStatement</S>
+                <S>Measure-TryStatement</S>
+                <S>Measure-TypeDefinition</S>
+                <S>Measure-WhileStatement</S>
+              </LST>
+            </Obj>
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes"># Changelog_x000D__x000A__x000D__x000A_All notable changes to this project will be documented in this file._x000D__x000A__x000D__x000A_The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),_x000D__x000A_and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)._x000D__x000A__x000D__x000A_## [Unreleased]_x000D__x000A__x000D__x000A_- Fix issue with DSC composite resources._x000D__x000A_- Fix issues with LF by hashtable check._x000D__x000A__x000D__x000A_### Added_x000D__x000A__x000D__x000A_- Create new module out of the nested one from DscResource.tests_x000D__x000A_- Used the DSC custom rules from this built module to apply to its own source_x000D__x000A_- Suggested corrections for keyword check_x000D__x000A__x000D__x000A_### Changed_x000D__x000A__x000D__x000A_- Performance improvement on QA tests_x000D__x000A_- Excluded Help Quality for now</S>
+      <Obj N="Dependencies" RefId="6">
+        <TNRef RefId="1" />
+        <LST>
+          <Obj RefId="7">
+            <TN RefId="3">
+              <T>System.Collections.Specialized.OrderedDictionary</T>
+              <T>System.Object</T>
+            </TN>
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">PSScriptAnalyzer</S>
+              </En>
+              <En>
+                <S N="Key">MinimumVersion</S>
+                <S N="Value">1.18.3</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:PSScriptAnalyzer/1.18.3</S>
+              </En>
+            </DCT>
+          </Obj>
+        </LST>
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="8">
+        <TN RefId="4">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) 2019 dsccommunity.org. All rights reserved.</S>
+          <S N="description">PS Script Analyzer Custom Rules for the DSC Community standards</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes"># Changelog_x000D__x000A__x000D__x000A_All notable changes to this project will be documented in this file._x000D__x000A__x000D__x000A_The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),_x000D__x000A_and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)._x000D__x000A__x000D__x000A_## [Unreleased]_x000D__x000A__x000D__x000A_- Fix issue with DSC composite resources._x000D__x000A_- Fix issues with LF by hashtable check._x000D__x000A__x000D__x000A_### Added_x000D__x000A__x000D__x000A_- Create new module out of the nested one from DscResource.tests_x000D__x000A_- Used the DSC custom rules from this built module to apply to its own source_x000D__x000A_- Suggested corrections for keyword check_x000D__x000A__x000D__x000A_### Changed_x000D__x000A__x000D__x000A_- Performance improvement on QA tests_x000D__x000A_- Excluded Help Quality for now</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">False</S>
+          <S N="versionDownloadCount">248020</S>
+          <S N="downloadCount">262107</S>
+          <S N="packageSize">14794</S>
+          <S N="published">11/21/2019 1:41:34 AM -06:00</S>
+          <S N="created">11/21/2019 1:41:34 AM -06:00</S>
+          <S N="lastUpdated">5/30/2025 12:00:00 PM -05:00</S>
+          <S N="tags">PSScriptAnalyzer PSSA Analyzer AnalyzerRules DesiredStateConfiguration DSC DSCResourceKit DSCResource Windows MacOS Linux PSModule PSEdition_Desktop PSEdition_Core PSFunction_Measure-CatchClause PSCommand_Measure-CatchClause PSFunction_Measure-DoUntilStatement PSCommand_Measure-DoUntilStatement PSFunction_Measure-DoWhileStatement PSCommand_Measure-DoWhileStatement PSFunction_Measure-ForEachStatement PSCommand_Measure-ForEachStatement PSFunction_Measure-ForStatement PSCommand_Measure-ForStatement PSFunction_Measure-FunctionBlockBrace PSCommand_Measure-FunctionBlockBrace PSFunction_Measure-Hashtable PSCommand_Measure-Hashtable PSFunction_Measure-IfStatement PSCommand_Measure-IfStatement PSFunction_Measure-Keyword PSCommand_Measure-Keyword PSFunction_Measure-ParameterBlockMandatoryNamedArgument PSCommand_Measure-ParameterBlockMandatoryNamedArgument PSFunction_Measure-ParameterBlockParameterAttribute PSCommand_Measure-ParameterBlockParameterAttribute PSFunction_Measure-SwitchStatement PSCommand_Measure-SwitchStatement PSFunction_Measure-TryStatement PSCommand_Measure-TryStatement PSFunction_Measure-TypeDefinition PSCommand_Measure-TypeDefinition PSFunction_Measure-WhileStatement PSCommand_Measure-WhileStatement PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2025-05-30T12:00:00Z</S>
+          <S N="NormalizedVersion">0.2.0</S>
+          <S N="Authors">DSC Community</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">DscResource.AnalyzerRules.nuspec|DscResource.AnalyzerRules.psm1|DscResource.AnalyzerRules.psd1|en-US\about_DscResource.AnalyzerRules.help.txt|en-US\DscResource.AnalyzerRules.psd1</S>
+          <S N="GUID">7cb2ad55-ea9f-499c-9205-77fc0160e66e</S>
+          <S N="PowerShellVersion">5.1</S>
+          <S N="CompanyName">Unknown</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">/home/rcfmartin/Git/psxo/.vscode/DscResource.AnalyzerRules/0.2.0</S>
+    </MS>
+  </Obj>
+</Objs>

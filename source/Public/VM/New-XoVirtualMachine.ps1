@@ -93,8 +93,8 @@ function New-XoVirtualMachine
     $sess = New-XoSession -Uri "https://xo.example.com" -Token "Caywizq1kyz7G2mg25Tc2rk_KxgIb063DnM4ScqdMVE"
     New-XoVirtualMachine -Session $sess -NameLabel "My New VM" -TemplateId "06754190-adbf-46a9-ab00-558ffcc9a22f" -BootAfterCreate:$true
     #>
-    [CmdletBinding()]
-    [OutputType([void])]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
+    [OutputType([XoVirtualMachine])]
     param (
         [Parameter(Mandatory = $true)]
         [XoSession]
@@ -209,162 +209,167 @@ function New-XoVirtualMachine
 
     process
     {
-        [hashtable]$params = @{
-            "name_label" = $NameLabel
-            "template"   = $TemplateId
-        }
-        if ($PSBoundParameters.ContainsKey("Acls"))
+        if ($PSCmdlet.ShouldProcess($NameLabel, "Create new VM"))
         {
-            $params["acls"] = $Acls
-        }
-        if ($PSBoundParameters.ContainsKey("AffinityHostId"))
-        {
-            $params["affinityHost"] = $AffinityHostId
-        }
-        if ($PSBoundParameters.ContainsKey("BootAfterCreate"))
-        {
-            $params["bootAfterCreate"] = $BootAfterCreate
-        }
-        if ($PSBoundParameters.ContainsKey("CloudConfig"))
-        {
-            $params["cloudConfig"] = $CloudConfig
-        }
-        if ($PSBoundParameters.ContainsKey("CreateVtpm"))
-        {
-            $params["createVtpm"] = $CreateVtpm
-        }
-        if ($PSBoundParameters.ContainsKey("NetworkConfig"))
-        {
-            $params["networkConfig"] = $NetworkConfig
-        }
-        if ($PSBoundParameters.ContainsKey("CoreOs"))
-        {
-            $params["coreOs"] = $CoreOs
-        }
-        if ($PSBoundParameters.ContainsKey("Clone"))
-        {
-            $params["clone"] = $Clone
-        }
-        if ($PSBoundParameters.ContainsKey("CoresPerSocket"))
-        {
-            $params["coresPerSocket"] = $CoresPerSocket
-        }
-        if ($PSBoundParameters.ContainsKey("ResourceSet"))
-        {
-            $params["resourceSet"] = $ResourceSet
-        }
-        if ($PSBoundParameters.ContainsKey("DestroyCloudConfigVdiAfterBoot"))
-        {
-            $params["destroyCloudConfigVdiAfterBoot"] = $DestroyCloudConfigVdiAfterBoot
-        }
-        if ($PSBoundParameters.ContainsKey("Installation"))
-        {
-            $params["installation"] = $Installation
-        }
-        if ($PSBoundParameters.ContainsKey("VgpuType"))
-        {
-            $params["vgpuType"] = $VgpuType
-        }
-        if ($PSBoundParameters.ContainsKey("GpuGroup"))
-        {
-            $params["gpuGroup"] = $GpuGroup
-        }
-        if ($PSBoundParameters.ContainsKey("NameDescription"))
-        {
-            $params["name_description"] = $NameDescription
-        }
-        if ($PSBoundParameters.ContainsKey("PvArgs"))
-        {
-            $params["pv_args"] = $PvArgs
-        }
-        if ($PSBoundParameters.ContainsKey("Share"))
-        {
-            $params["share"] = $Share
-        }
-        if ($PSBoundParameters.ContainsKey("VIFs"))
-        {
-            $params["VIFs"] = $VIFs
-        }
-        if ($PSBoundParameters.ContainsKey("VDIs"))
-        {
-            $params["VDIs"] = $VDIs
-        }
-        if ($PSBoundParameters.ContainsKey("ExistingDisks"))
-        {
-            $params["existingDisks"] = $ExistingDisks
-        }
-        if ($PSBoundParameters.ContainsKey("HvmBootFirmware"))
-        {
-            $params["hvmBootFirmware"] = $HvmBootFirmware
-        }
-        if ($PSBoundParameters.ContainsKey("CopyHostBiosStrings"))
-        {
-            $params["copyHostBiosStrings"] = $CopyHostBiosStrings
-        }
 
-        try
-        {
-            $body = New-JsonRpcRequest -Method "vm.create" -Params $params
-            $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
-        if ($resp)
-        {
-            $prop = $resp.params.items.psobject.Properties.Value | Where-Object { $_.name_label -ilike "*VM.*clone*" }
-
-            if ($prop.status -ieq "failure")
-            {
-                try
-                {
-                    $task = Get-XoTask -Session $sess -ErrorAction Stop | Where-Object { $_.Result.Task.uuid -ieq "$($prop.id)" }
-
-                }
-                catch
-                {
-                    throw $_.Exception.Message
-                }
-                throw "Failed to Resume the VM. TaskId: $($task.id) Error: $($task.result.task.error_info)"
+            [hashtable]$params = @{
+                "name_label" = $NameLabel
+                "template"   = $TemplateId
             }
-
-        }
-        $null = Get-XoTaskProgress -Session $Session -Id $prop.id
-
-        try
-        {
-            $vm = Get-XoVirtualMachine -Session $Session -Name "$($NameLabel)" -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
-        if (-not $vm.Id)
-        {
-            throw "Failed to get new VM. The VM was not found or is not ready."
-        }
-        if ($PSBoundParameters.ContainsKey("Tag"))
-        {
+            if ($PSBoundParameters.ContainsKey("Acls"))
+            {
+                $params["acls"] = $Acls
+            }
+            if ($PSBoundParameters.ContainsKey("AffinityHostId"))
+            {
+                $params["affinityHost"] = $AffinityHostId
+            }
+            if ($PSBoundParameters.ContainsKey("BootAfterCreate"))
+            {
+                $params["bootAfterCreate"] = $BootAfterCreate
+            }
+            if ($PSBoundParameters.ContainsKey("CloudConfig"))
+            {
+                $params["cloudConfig"] = $CloudConfig
+            }
+            if ($PSBoundParameters.ContainsKey("CreateVtpm"))
+            {
+                $params["createVtpm"] = $CreateVtpm
+            }
+            if ($PSBoundParameters.ContainsKey("NetworkConfig"))
+            {
+                $params["networkConfig"] = $NetworkConfig
+            }
+            if ($PSBoundParameters.ContainsKey("CoreOs"))
+            {
+                $params["coreOs"] = $CoreOs
+            }
+            if ($PSBoundParameters.ContainsKey("Clone"))
+            {
+                $params["clone"] = $Clone
+            }
+            if ($PSBoundParameters.ContainsKey("CoresPerSocket"))
+            {
+                $params["coresPerSocket"] = $CoresPerSocket
+            }
+            if ($PSBoundParameters.ContainsKey("ResourceSet"))
+            {
+                $params["resourceSet"] = $ResourceSet
+            }
+            if ($PSBoundParameters.ContainsKey("DestroyCloudConfigVdiAfterBoot"))
+            {
+                $params["destroyCloudConfigVdiAfterBoot"] = $DestroyCloudConfigVdiAfterBoot
+            }
+            if ($PSBoundParameters.ContainsKey("Installation"))
+            {
+                $params["installation"] = $Installation
+            }
+            if ($PSBoundParameters.ContainsKey("VgpuType"))
+            {
+                $params["vgpuType"] = $VgpuType
+            }
+            if ($PSBoundParameters.ContainsKey("GpuGroup"))
+            {
+                $params["gpuGroup"] = $GpuGroup
+            }
+            if ($PSBoundParameters.ContainsKey("NameDescription"))
+            {
+                $params["name_description"] = $NameDescription
+            }
+            if ($PSBoundParameters.ContainsKey("PvArgs"))
+            {
+                $params["pv_args"] = $PvArgs
+            }
+            if ($PSBoundParameters.ContainsKey("Share"))
+            {
+                $params["share"] = $Share
+            }
+            if ($PSBoundParameters.ContainsKey("VIFs"))
+            {
+                $params["VIFs"] = $VIFs
+            }
+            if ($PSBoundParameters.ContainsKey("VDIs"))
+            {
+                $params["VDIs"] = $VDIs
+            }
+            if ($PSBoundParameters.ContainsKey("ExistingDisks"))
+            {
+                $params["existingDisks"] = $ExistingDisks
+            }
+            if ($PSBoundParameters.ContainsKey("HvmBootFirmware"))
+            {
+                $params["hvmBootFirmware"] = $HvmBootFirmware
+            }
+            if ($PSBoundParameters.ContainsKey("CopyHostBiosStrings"))
+            {
+                $params["copyHostBiosStrings"] = $CopyHostBiosStrings
+            }
 
             try
             {
-                if (-not $vm.Id)
-                {
-                    throw "Failed to add tag to the VM. VM was not found or is not ready."
-                }
-                $null = Add-XoTag -Session $Session -Id $vm.Id -Tag $Tag -ErrorAction Stop
+                $body = New-JsonRpcRequest -Method "vm.create" -Params $params
+                $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
             }
             catch
             {
                 throw $_.Exception.Message
             }
+            if ($resp)
+            {
+                $prop = $resp.params.items.psobject.Properties.Value | Where-Object { $_.name_label -ilike "*VM.*clone*" }
+
+                if ($prop.status -ieq "failure")
+                {
+                    try
+                    {
+                        $task = Get-XoTask -Session $sess -ErrorAction Stop | Where-Object { $_.Result.Task.uuid -ieq "$($prop.id)" }
+
+                    }
+                    catch
+                    {
+                        throw $_.Exception.Message
+                    }
+                    throw "Failed to Resume the VM. TaskId: $($task.id) Error: $($task.result.task.error_info)"
+                }
+
+            }
+            $null = Get-XoTaskProgress -Session $Session -Id $prop.id
+
+            try
+            {
+                $vm = Get-XoVirtualMachine -Session $Session -Name "$($NameLabel)" -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_.Exception.Message
+            }
+            if (-not $vm.Id)
+            {
+                throw "Failed to get new VM. The VM was not found or is not ready."
+            }
+            if ($PSBoundParameters.ContainsKey("Tag"))
+            {
+
+                try
+                {
+                    if (-not $vm.Id)
+                    {
+                        throw "Failed to add tag to the VM. VM was not found or is not ready."
+                    }
+                    $null = Add-XoTag -Session $Session -Id $vm.Id -Tag $Tag -ErrorAction Stop
+                }
+                catch
+                {
+                    throw $_.Exception.Message
+                }
+            }
+            return $vm
         }
 
     }
 
     end
     {
-        return $vm
+
     }
 }

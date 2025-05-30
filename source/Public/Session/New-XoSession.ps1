@@ -17,7 +17,7 @@ function New-XoSession
     .EXAMPLE
     New-XoSession -Uri "https://xo.example.com" -Token "DPjwthwfJLTJj1UPmAojAQIlQHtsMzNabkTOTZz5uzU"
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = "Low")]
     [OutputType([XoSession])]
     param (
         [Parameter(Mandatory = $true)]
@@ -35,32 +35,37 @@ function New-XoSession
 
     process
     {
-        $cookie = [System.Net.Cookie]::new('authenticationToken', "$($Token)")
-
-        $newSession = [Microsoft.PowerShell.Commands.WebRequestSession]::new()
-
-
-        $newSession.Cookies.Add("$($Uri -replace '\/$','')", $cookie)
-
-        $xoSession = [XoSession]::new(@{
-                Uri     = "$($Uri -replace '\/$', '')"
-                Session = $newSession
-            })
-
-        try
+        if ($PSCmdlet.ShouldProcess($Uri, "Create New session"))
         {
-            $null = Test-XoSession -Session $xoSession -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
+            $cookie = [System.Net.Cookie]::new('authenticationToken', "$($Token)")
 
-        $Script:XoSessions.AddSession($xoSession)
+            $newSession = [Microsoft.PowerShell.Commands.WebRequestSession]::new()
+
+
+            $newSession.Cookies.Add("$($Uri -replace '\/$','')", $cookie)
+
+            $xoSession = [XoSession]::new(@{
+                    Uri     = "$($Uri -replace '\/$', '')"
+                    Session = $newSession
+                })
+
+            try
+            {
+                $null = Test-XoSession -Session $xoSession -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_.Exception.Message
+            }
+
+            $Script:XoSessions.AddSession($xoSession)
+
+            return $Script:XoSessions.GetSession($xoSession.Id)
+
+        }
     }
 
     end
     {
-        return $Script:XoSessions.GetSession($xoSession.Id)
     }
 }

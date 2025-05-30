@@ -592,12 +592,12 @@ Register-XoSrNfs -Session $Session -HostId $MyHost.Id -Name "MyShare Test" -Desc
 Unregister-XoSr -Session $Session -Id "19ee9e08-75a3-4aa0-a21b-208e6d779a92" -Confirm:$false
 ```
 
-
 ### Remove SR
 
 ```powershell
 Remove-XoSr -Session $Session -Id "19ee9e08-75a3-4aa0-a21b-208e6d779a92"
 ```
+
 ### Enable SR Maintenance Mode
 
 ```powershell

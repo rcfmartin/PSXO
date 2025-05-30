@@ -26,7 +26,7 @@ function Start-XoVirtualMachine
     $sess = New-XoSession -Uri "https://xo.example.com" -Token "Caywizq1kyz7G2mg25Tc2rk_KxgIb063DnM4ScqdMVE"
     Start-XoVirtualMachine -Session $sess -Id "06754190-adbf-46a9-ab00-558ffcc9a22f" -HostId "1235a452-84c6-4191-af66-3bc6e484ae09"
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([void])]
     param (
         [Parameter(Mandatory = $true)]
@@ -63,56 +63,59 @@ function Start-XoVirtualMachine
 
     process
     {
-        [hashtable]$params = @{
-            id = $Id
-        }
+        if ($PSCmdlet.ShouldProcess($Id, "Restart VM"))
+        {
+            [hashtable]$params = @{
+                id = $Id
+            }
 
-        try
-        {
-            $vmExists = Get-XoVirtualMachine -Session $Session -Id $Id -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
-        if (-not($vmExists.Id))
-        {
-            throw "VM not found"
-        }
-        if ($PSBoundParameters.ContainsKey("Force"))
-        {
-            $params["force"] = $Force
-        }
-        if ($PSBoundParameters.ContainsKey("BypassMacAddressCheck"))
-        {
-            $params["BypassMacAddressCheck"] = $BypassMacAddressCheck
-        }
-        if ($PSBoundParameters.ContainsKey("HostId"))
-        {
-            $params["host"] = $HostId
-        }
-        try
-        {
-            $body = New-JsonRpcRequest -Method "vm.start" -Params $params
-            $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
+            try
+            {
+                $vmExists = Get-XoVirtualMachine -Session $Session -Id $Id -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_.Exception.Message
+            }
+            if (-not($vmExists.Id))
+            {
+                throw "VM not found"
+            }
+            if ($PSBoundParameters.ContainsKey("Force"))
+            {
+                $params["force"] = $Force
+            }
+            if ($PSBoundParameters.ContainsKey("BypassMacAddressCheck"))
+            {
+                $params["BypassMacAddressCheck"] = $BypassMacAddressCheck
+            }
+            if ($PSBoundParameters.ContainsKey("HostId"))
+            {
+                $params["host"] = $HostId
+            }
+            try
+            {
+                $body = New-JsonRpcRequest -Method "vm.start" -Params $params
+                $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_.Exception.Message
+            }
 
-        if ($result.Error)
-        {
-            throw $result.Error
+            if ($result.Error)
+            {
+                throw $result.Error
+            }
+
+
+            if ($resp)
+            {
+                $prop = $resp.params.items.psobject.Properties.Value | Where-Object { $_.name_label -ilike "*VM.start*" }
+
+            }
+            $null = Get-XoTaskProgress -Session $Session -Id $prop.id
         }
-
-
-        if ($resp)
-        {
-            $prop = $resp.params.items.psobject.Properties.Value | Where-Object { $_.name_label -ilike "*VM.start*" }
-
-        }
-        $null = Get-XoTaskProgress -Session $Session -Id $prop.id
     }
 
     end
