@@ -16,12 +16,12 @@ function Rename-XoSr
     .PARAMETER Name
     Target SR name
 
-    .PARAMETER Descritpion
+    .PARAMETER Description
     SR description
 
     .EXAMPLE
     $sess = New-XoSession -Uri "https://xo.example.com" -Token "Caywizq1kyz7G2mg25Tc2rk_KxgIb063DnM4ScqdMVE"
-    Rename-XoSr -Session $sess Id "a933cb47-fbf7-42a5-af39-abac9fc3feca" -Name "MySR Test" -Descritpion "Test SR"
+    Rename-XoSr -Session $sess Id "a933cb47-fbf7-42a5-af39-abac9fc3feca" -Name "MySR Test" -Description "Test SR"
     #>
     [CmdletBinding()]
     [OutputType([XoSr])]
@@ -44,7 +44,7 @@ function Rename-XoSr
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Descritpion
+        $Description
     )
 
     begin
@@ -58,15 +58,6 @@ function Rename-XoSr
     process
     {
 
-        try
-        {
-            $body = New-JsonRpcRequest -Method "xo.getAllObjects" -Params @{filter = "type:pbd" }
-            $test = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
         if ($PSBoundParameters.ContainsKey("Name"))
         {
             $params["name_label"] = $Name

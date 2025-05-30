@@ -18,7 +18,7 @@ function Remove-XoSession
     $session = New-XoSession -Uri "https://xo.example.com" -Token "DPjwthwfJLTJj1UPmAojAQIlQHtsMzNabkTOTZz5uzU"
     $session | Remove-XoSession
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([void])]
     param (
         [Parameter(ValueFromPipeline = $true, Mandatory = $true)]
@@ -41,12 +41,15 @@ function Remove-XoSession
 
     end
     {
-        $newList = $Script:XoSessions.Sessions | Where-Object { $_.Id -notin $toDelete.Id }
-        $null = $Script:XoSessions.Clear()
-
-        foreach ($item in $newList)
+        if ($PSCmdlet.ShouldProcess($Session.Id, "Remove Session"))
         {
-            $Script:XoSessions.AddSession($item)
+            $newList = $Script:XoSessions.Sessions | Where-Object { $_.Id -notin $toDelete.Id }
+            $null = $Script:XoSessions.Clear()
+
+            foreach ($item in $newList)
+            {
+                $Script:XoSessions.AddSession($item)
+            }
         }
 
     }

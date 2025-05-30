@@ -94,39 +94,39 @@ BeforeDiscovery {
     }
 }
 # Scripanalyzer not working on linux. Currently developing this on POP_OS!
-# Describe 'Quality for module' -Tags 'TestQuality' {
-#     BeforeDiscovery {
-#         if (Get-Command -Name Invoke-ScriptAnalyzer -ErrorAction SilentlyContinue)
-#         {
-#             $scriptAnalyzerRules = Get-ScriptAnalyzerRule
-#         }
-#         else
-#         {
-#             if ($ErrorActionPreference -ne 'Stop')
-#             {
-#                 Write-Warning -Message 'ScriptAnalyzer not found!'
-#             }
-#             else
-#             {
-#                 throw 'ScriptAnalyzer not found!'
-#             }
-#         }
-#     }
+Describe 'Quality for module' -Tags 'TestQuality' {
+    BeforeDiscovery {
+        if (Get-Command -Name Invoke-ScriptAnalyzer -ErrorAction SilentlyContinue)
+        {
+            $scriptAnalyzerRules = Get-ScriptAnalyzerRule
+        }
+        else
+        {
+            if ($ErrorActionPreference -ne 'Stop')
+            {
+                Write-Warning -Message 'ScriptAnalyzer not found!'
+            }
+            else
+            {
+                throw 'ScriptAnalyzer not found!'
+            }
+        }
+    }
 
-# Removed the unit tests for each function/class since it relies on json-rpc to work.
-# It 'Should have a unit test for <Name>' -ForEach $testCases {
-#     Get-ChildItem -Path 'tests\' -Recurse -Include "$Name.Tests.ps1" | Should -Not -BeNullOrEmpty
-# }
+    # # Removed the unit tests for each function/class since it relies on json-rpc to work.
+    # It 'Should have a unit test for <Name>' -ForEach $testCases {
+    #     Get-ChildItem -Path 'tests\' -Recurse -Include "$Name.Tests.ps1" | Should -Not -BeNullOrEmpty
+    # }
 
-# It 'Should pass Script Analyzer for <Name>' -ForEach $testCases -Skip:(-not $scriptAnalyzerRules) {
-#     $functionFile = Get-ChildItem -Path $sourcePath -Recurse -Include "$Name.ps1"
+    It 'Should pass Script Analyzer for <Name>' -ForEach $testCases -Skip:(-not $scriptAnalyzerRules) {
+        $functionFile = Get-ChildItem -Path $sourcePath -Recurse -Include "$Name.ps1"
 
-#     $pssaResult = (Invoke-ScriptAnalyzer -Path $functionFile.FullName)
-#     $report = $pssaResult | Format-Table -AutoSize | Out-String -Width 110
-#     $pssaResult | Should -BeNullOrEmpty -Because `
-#         "some rule triggered.`r`n`r`n $report"
-# }
-# }
+        $pssaResult = (Invoke-ScriptAnalyzer -Path $functionFile.FullName)
+        $report = $pssaResult | Format-Table -AutoSize | Out-String -Width 110
+        $pssaResult | Should -BeNullOrEmpty -Because `
+            "some rule triggered.`r`n`r`n $report"
+    }
+}
 
 Describe 'Help for module' -Tags 'helpQuality' {
     It 'Should have .SYNOPSIS for <Name>' -ForEach $testCases {

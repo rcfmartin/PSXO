@@ -40,6 +40,7 @@ function Register-XoSrNfs
     Register-XoSrNfs -Session $sess -HostId $MyHost.Id -Name "MyShare Test" -Descritpion "Test File Share" -Server "10.0.0.9" -ServerPath "/mnt/FileShares/test"
     #>
     [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification = 'NFS is not plural')]
     [OutputType([XoSr])]
     param (
         [Parameter(Mandatory = $true)]

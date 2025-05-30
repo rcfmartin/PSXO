@@ -26,7 +26,7 @@ function New-XoRemote
     $sess = New-XoSession -Uri "https://xo.example.com" -Token "Caywizq1kyz7G2mg25Tc2rk_KxgIb063DnM4ScqdMVE"
     New-XoRemote -Session $Session -Name "test" -Url "nfs://10.0.0.99:/mnt/MyShares/test"
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = "Medium")]
     [OutputType([XoRemote])]
     param (
         [Parameter(Mandatory = $true)]
@@ -59,50 +59,53 @@ function New-XoRemote
 
     process
     {
-
-        $params = @{
-            name = $Name
-            url  = $Url
-        }
-
-        if ($PSBoundParameters.ContainsKey("Proxy"))
+        if ($PSCmdlet.ShouldProcess($Name, "Create Remote"))
         {
-            $params["proxy"] = $Proxy
-        }
-
-        try
-        {
-            $body = New-JsonRpcRequest -Method "remote.create" -Params $params
-            $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
-
-        if ($null -ne $resp)
-        {
-            if ($resp.result.error)
-            {
-                throw $resp.result.error
+            $params = @{
+                name = $Name
+                url  = $Url
             }
+
+            if ($PSBoundParameters.ContainsKey("Proxy"))
+            {
+                $params["proxy"] = $Proxy
+            }
+
             try
             {
-                $remote = Get-XoRemote -Session $Session -Id $resp.result.id -ErrorAction Stop
+                $body = New-JsonRpcRequest -Method "remote.create" -Params $params
+                $resp = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
             }
             catch
             {
                 throw $_.Exception.Message
             }
-        }
 
+            if ($null -ne $resp)
+            {
+                if ($resp.result.error)
+                {
+                    throw $resp.result.error
+                }
+                try
+                {
+                    $remote = Get-XoRemote -Session $Session -Id $resp.result.id -ErrorAction Stop
+                }
+                catch
+                {
+                    throw $_.Exception.Message
+                }
+            }
+
+            if ($remote)
+            {
+                return $remote
+            }
+        }
     }
 
     end
     {
-        if ($remote)
-        {
-            return $remote
-        }
+
     }
 }

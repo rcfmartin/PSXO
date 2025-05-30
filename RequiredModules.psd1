@@ -12,13 +12,14 @@
     #    }
     #}
 
-    InvokeBuild           = 'latest'
-    PSScriptAnalyzer      = 'latest'
-    Pester                = 'latest'
-    ModuleBuilder         = 'latest'
-    ChangelogManagement   = 'latest'
-    Sampler               = 'latest'
-    'Sampler.GitHubTasks' = 'latest'
-    MarkdownLinkCheck     = 'latest'
-    PlatyPS               = 'latest'
+    InvokeBuild                 = 'latest'
+    PSScriptAnalyzer            = 'latest'
+    Pester                      = 'latest'
+    ModuleBuilder               = 'latest'
+    ChangelogManagement         = 'latest'
+    Sampler                     = 'latest'
+    'Sampler.GitHubTasks'       = 'latest'
+    MarkdownLinkCheck           = 'latest'
+    PlatyPS                     = 'latest'
+    'DscResource.AnalyzerRules' = 'latest'
 }

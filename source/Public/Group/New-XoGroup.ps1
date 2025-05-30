@@ -17,7 +17,7 @@ function New-XoGroup
     $sess = New-XoSession -Uri "https://xo.example.com" -Token "Caywizq1kyz7G2mg25Tc2rk_KxgIb063DnM4ScqdMVE"
     New-XoGroup -Session $sess -Name "MyGroup"
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = "low")]
     [OutputType([XoGroup])]
     param (
         [Parameter(Mandatory = $true)]
@@ -36,36 +36,38 @@ function New-XoGroup
 
     process
     {
-
-        $params = @{
-            name = $Name
-        }
-
-
-        try
+        if ($PSCmdlet.ShouldProcess($Name, "Create Group"))
         {
-            $body = New-JsonRpcRequest -Method "group.create" -Params $params
-            $null = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
+
+            $params = @{
+                name = $Name
+            }
 
 
-        try
-        {
-            $resp = Get-XoGroup -Session $Session -Name "$($Name)" -ErrorAction Stop
-        }
-        catch
-        {
-            throw $_.Exception.Message
-        }
-        if ($null -ne $resp)
-        {
-            return $resp
-        }
+            try
+            {
+                $body = New-JsonRpcRequest -Method "group.create" -Params $params
+                $null = Send-WebSocketJsonRpc -Session $Session -Body $body -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_.Exception.Message
+            }
 
+
+            try
+            {
+                $resp = Get-XoGroup -Session $Session -Name "$($Name)" -ErrorAction Stop
+            }
+            catch
+            {
+                throw $_.Exception.Message
+            }
+            if ($null -ne $resp)
+            {
+                return $resp
+            }
+        }
     }
 
     end

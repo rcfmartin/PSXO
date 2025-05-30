@@ -33,7 +33,7 @@ function Get-XoPoolMissingPatch
 
     begin
     {
-        function Get-XoPatches
+        function Get-XoPatch
         {
             [CmdletBinding()]
             param (
@@ -74,7 +74,7 @@ function Get-XoPoolMissingPatch
             host = $HostId
         }
 
-        $resp = Get-XoPatches -Session $Session -Params $params
+        $resp = Get-XoPatch -Session $Session -Params $params
 
         if ($resp.params.items)
         {
@@ -118,7 +118,7 @@ function Get-XoPoolMissingPatch
             Write-Progress -Status $status -Activity $act -Completed -Id 1
         }
 
-        $output = Get-XoPatches -Session $Session -Params $params
+        $output = Get-XoPatch -Session $Session -Params $params
         if ($output.result)
         {
             $items = [pscustomobject]$output.result
