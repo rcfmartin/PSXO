@@ -6,6 +6,12 @@ This module provides PowerShell cmdlets for interacting with Xen Orchestra.
 It primarily uses the JSON-RPC API, with some cmdlets also utilizing the REST API
 where appropriate.
 
+## Install Dependencies
+
+```powershell
+Install-Module InvokeBuild,PSDepend,Sampler -SkipPublisherCheck
+```
+
 ## Build The Module
 
 > The built module will be in the `otuput` folder
