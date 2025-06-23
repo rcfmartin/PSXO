@@ -14,7 +14,7 @@ Takes a snapshot of the target virtual machine
 
 ```
 New-XoSnapshot [-Session] <XoSession> [-Id] <String> [[-Name] <String>] [[-Description] <String>]
- [[-SaveMemory] <Boolean>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-SaveMemory] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -101,6 +101,37 @@ Aliases:
 Required: False
 Position: 5
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

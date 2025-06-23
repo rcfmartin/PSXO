@@ -20,7 +20,7 @@ New-XoVirtualMachine [-Session] <XoSession> [-NameLabel] <String> [-TemplateId] 
  [[-Installation] <Object>] [[-VgpuType] <String>] [[-GpuGroup] <String>] [[-NameDescription] <String>]
  [[-PvArgs] <String>] [[-Share] <Boolean>] [[-VIFs] <Array>] [[-VDIs] <Array>] [[-ExistingDisks] <Object>]
  [[-HvmBootFirmware] <String>] [[-CopyHostBiosStrings] <Boolean>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -432,6 +432,37 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProgressAction
 {{ Fill ProgressAction Description }}
 
@@ -454,7 +485,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Void
+### XoVirtualMachine
 ## NOTES
 
 ## RELATED LINKS
